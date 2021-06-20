@@ -1,11 +1,11 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular
     .module('arkclient.components')
     .controller('AddressbookController', ['$scope', '$mdDialog', 'toastService', 'storageService', 'gettextCatalog', 'gettext', 'accountService', 'utilityService', AddressbookController])
 
-  function AddressbookController ($scope, $mdDialog, toastService, storageService, gettextCatalog, gettext, accountService, utilityService) {
+  function AddressbookController($scope, $mdDialog, toastService, storageService, gettextCatalog, gettext, accountService, utilityService) {
     const self = this
     // var contacts
     self.trim = function (str) {
@@ -30,10 +30,10 @@
     }
 
     self.isAddress = function (address) {
-      return require(require('path').resolve(__dirname, '../node_modules/arkjs')).crypto.validateAddress(address)
+      return require(require('path').resolve(__dirname, '../node_modules/qreditjs')).crypto.validateAddress(address)
     }
 
-    function existsIn (haystack, needle) {
+    function existsIn(haystack, needle) {
       return haystack.indexOf(needle) !== -1
     }
 
@@ -67,11 +67,11 @@
         cancel: cancel
       }
 
-      function cancel () {
+      function cancel() {
         $mdDialog.hide()
       }
 
-      function add (name, address) {
+      function add(name, address) {
         self.getContacts()
         if (self.trim(name) === '') {
           self.showToast(gettext('This contact name is not valid'), name, true)
@@ -110,7 +110,7 @@
 
         self.contacts.push(newContact)
         self.save()
-        self.showToast(gettext('Contact \'{{ name }}\' with address \'{{ address }}\' added successfully'), null, false, {name: name, address: address})
+        self.showToast(gettext('Contact \'{{ name }}\' with address \'{{ address }}\' added successfully'), null, false, { name: name, address: address })
         if (successCallback) {
           successCallback()
         }
@@ -143,11 +143,11 @@
         address: address
       }
 
-      function cancel () {
+      function cancel() {
         $mdDialog.hide()
       }
 
-      function save (name, address) {
+      function save(name, address) {
         if (self.trim(name) === '') {
           self.showToast(gettext('This contact name is not valid'), name, true)
           return
@@ -171,11 +171,11 @@
           }
         }
         self.save()
-        self.showToast(gettext('Contact \'{{ name }}\' with address \'{{ address }}\' saved successfully'), null, false, {name: name, address: address})
+        self.showToast(gettext('Contact \'{{ name }}\' with address \'{{ address }}\' saved successfully'), null, false, { name: name, address: address })
         cancel()
       }
 
-      function remove (name) {
+      function remove(name) {
         self.getContacts()
         if (!self.contactExists(name)) {
           self.showToast(gettext('A contact with this name doesn\'t exist'), name, true)

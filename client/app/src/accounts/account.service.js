@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.accounts')
@@ -12,9 +12,9 @@
    * @returns {{loadAll: Function}}
    * @constructor
    */
-  function AccountService ($q, $http, networkService, storageService, ledgerService, gettextCatalog, gettext, utilityService, ARK_LAUNCH_DATE) {
+  function AccountService($q, $http, networkService, storageService, ledgerService, gettextCatalog, gettext, utilityService, ARK_LAUNCH_DATE) {
     const self = this
-    const ark = require(require('path').resolve(__dirname, '../node_modules/arkjs'))
+    const ark = require(require('path').resolve(__dirname, '../node_modules/qreditjs'))
 
     self.defaultFees = {
       'send': 10000000,
@@ -36,7 +36,7 @@
 
     self.peer = networkService.getPeer().ip
 
-    function showTimestamp (timestamp) { // eslint-disable-line no-unused-vars
+    function showTimestamp(timestamp) { // eslint-disable-line no-unused-vars
       const date = utilityService.arkStampToDate(timestamp)
 
       const currentTime = new Date().getTime()
@@ -76,7 +76,7 @@
       return Math.floor(diffTime / 60 / 60 / 24 / 30 / 12) + ' years ago'
     }
 
-    function fetchAccount (address) {
+    function fetchAccount(address) {
       const deferred = $q.defer()
       const defaultAccount = {
         address: address,
@@ -86,7 +86,7 @@
         delegates: [],
         selectedVotes: []
       }
-      networkService.getFromPeer('/api/accounts?address=' + address).then(
+      networkService.getFromPeer('/api/wallets/' + address).then(
         (resp) => {
           if (resp.success) {
             const account = resp.account
@@ -108,9 +108,9 @@
       return deferred.promise
     }
 
-    function fetchAccountAndForget (address) {
+    function fetchAccountAndForget(address) {
       const deferred = $q.defer()
-      networkService.getFromPeer('/api/accounts?address=' + address).then(
+      networkService.getFromPeer('/api/wallets/' + address).then(
         (resp) => {
           if (resp.success) {
             let account = storageService.get(address)
@@ -141,7 +141,7 @@
       return deferred.promise
     }
 
-    function getAccount (address) {
+    function getAccount(address) {
       const account = storageService.get(address)
       if (account) {
         account.transactions = storageService.get('transactions-' + address)
@@ -152,7 +152,7 @@
       return account
     }
 
-    function createAccount (passphrase) {
+    function createAccount(passphrase) {
       return new Promise((resolve, reject) => {
         const publicKey = ark.crypto.getKeys(passphrase).publicKey
         const address = ark.crypto.getAddress(publicKey, networkService.getNetwork().version)
@@ -169,7 +169,7 @@
       })
     }
 
-    function addWatchOnlyAddress (account) {
+    function addWatchOnlyAddress(account) {
       if (!account || !account.address || storageService.get(account.address) || account.ledger) {
         return
       }
@@ -184,7 +184,7 @@
       }
     }
 
-    function removeAccount (account) {
+    function removeAccount(account) {
       if (!account || !account.address) {
         return $q.when(null)
       }
@@ -202,7 +202,7 @@
       return $q.when(account)
     }
 
-    function getTransactionLabel (transaction, recipientAddress = null) {
+    function getTransactionLabel(transaction, recipientAddress = null) {
       let label = gettextCatalog.getString(self.TxTypes[transaction.type], { currency: networkService.getNetwork().token })
 
       if (recipientAddress && transaction.recipientId === recipientAddress && transaction.type === 0) {
@@ -212,14 +212,14 @@
       return label
     }
 
-    function formatTransaction (transaction, recipientAddress) {
+    function formatTransaction(transaction, recipientAddress) {
       transaction.label = getTransactionLabel(transaction, recipientAddress)
       transaction.date = utilityService.arkStampToDate(transaction.timestamp)
       if (transaction.recipientId === recipientAddress) {
         transaction.total = transaction.amount
-      // if (transaction.type == 0) {
-      //   transaction.label = gettextCatalog.getString("Receive Ark")
-      // }
+        // if (transaction.type == 0) {
+        //   transaction.label = gettextCatalog.getString("Receive Ark")
+        // }
       }
       if (transaction.senderId === recipientAddress) {
         transaction.total = -transaction.amount - transaction.fee
@@ -230,7 +230,7 @@
       return transaction
     }
 
-    function getFees (canUseCached) {
+    function getFees(canUseCached) {
       const deferred = $q.defer()
       if (canUseCached && self.cachedFees) {
         deferred.resolve(self.cachedFees)
@@ -251,7 +251,7 @@
       return deferred.promise
     }
 
-    function getTransactions (address, offset, limit, store) {
+    function getTransactions(address, offset, limit, store) {
       if (!offset) {
         offset = 0
       }
@@ -282,14 +282,14 @@
     }
 
     // this methods only works correctly, as long as getAllTransactions returns the transactions ordered by new to old!
-    function getRangedTransactions (address, startDate, endDate, onUpdate) {
+    function getRangedTransactions(address, startDate, endDate, onUpdate) {
       const startStamp = utilityService.dateToArkStamp(!startDate ? ARK_LAUNCH_DATE : startDate)
       const endStamp = utilityService.dateToArkStamp(!endDate ? new Date(new Date().setHours(23, 59, 59, 59)) : endDate)
 
       const deferred = $q.defer()
 
       let transactions = []
-      function onRangeUpdate (updateObj) {
+      function onRangeUpdate(updateObj) {
         const resultObj = {
           transactions: []
         }
@@ -320,12 +320,12 @@
       }
 
       getAllTransactions(address, null, onRangeUpdate)
-        .catch(error => deferred.reject({message: error.message, transactions: transactions}))
+        .catch(error => deferred.reject({ message: error.message, transactions: transactions }))
 
       return deferred.promise
     }
 
-    function getAllTransactions (address, totalLimit, onUpdate, offset, transactionCollection, deferred) {
+    function getAllTransactions(address, totalLimit, onUpdate, offset, transactionCollection, deferred) {
       if (!transactionCollection) {
         transactionCollection = []
       }
@@ -365,16 +365,16 @@
         }
 
         getAllTransactions(address, totalLimit, onUpdate, offset + transactions.length, transactionCollection, deferred)
-      }).catch(error => deferred.reject({message: error, transactions: transactionCollection}))
+      }).catch(error => deferred.reject({ message: error, transactions: transactionCollection }))
 
       return deferred.promise
     }
 
-    function isValidAddress (address) {
+    function isValidAddress(address) {
       return ark.crypto.validateAddress(address, networkService.getNetwork().version)
     }
 
-    function getDelegate (publicKey) {
+    function getDelegate(publicKey) {
       const deferred = $q.defer()
       if (!publicKey) {
         deferred.reject(gettextCatalog.getString('No publicKey'))
@@ -392,7 +392,7 @@
       return deferred.promise
     }
 
-    function getActiveDelegates () {
+    function getActiveDelegates() {
       const deferred = $q.defer()
       networkService.getFromPeer('/api/delegates').then((resp) => {
         if (resp && resp.success && resp.delegates) {
@@ -406,7 +406,7 @@
       return deferred.promise
     }
 
-    function getDelegateByUsername (username) {
+    function getDelegateByUsername(username) {
       const deferred = $q.defer()
       if (!username) {
         deferred.reject('No Username')
@@ -419,14 +419,14 @@
           storageService.set('username-' + resp.delegate.address, resp.delegate.username)
           deferred.resolve(resp.delegate)
         } else {
-          deferred.reject(gettextCatalog.getString('Cannot find delegate: {{ delegateName }}', {delegateName: username}))
+          deferred.reject(gettextCatalog.getString('Cannot find delegate: {{ delegateName }}', { delegateName: username }))
         }
       })
       return deferred.promise
     }
 
     // TODO: NOT working yet, waiting for 0.3.2
-    function searchDelegates (term) { // eslint-disable-line no-unused-vars
+    function searchDelegates(term) { // eslint-disable-line no-unused-vars
       const deferred = $q.defer()
       if (!term) {
         deferred.reject(gettextCatalog.getString('No search term'))
@@ -436,7 +436,7 @@
         if (resp && resp.success && resp.delegates) {
           deferred.resolve(resp.delegates)
         } else {
-          deferred.reject(gettextCatalog.getString('Cannot find any delegate using the search term \'{{ searchTerm }}\'!', {searchTerm: term}))
+          deferred.reject(gettextCatalog.getString('Cannot find any delegate using the search term \'{{ searchTerm }}\'!', { searchTerm: term }))
         }
       }, (err) => {
         deferred.reject(gettextCatalog.getString('An error occurred when searching for delegates:') + err)
@@ -444,9 +444,9 @@
       return deferred.promise
     }
 
-    function getVotedDelegates (address) {
+    function getVotedDelegates(address) {
       const deferred = $q.defer()
-      networkService.getFromPeer('/api/accounts/delegates/?address=' + address).then((resp) => {
+      networkService.getFromPeer('/api/delegates/' + address).then((resp) => {
         if (resp && resp.success) {
           let delegates = []
           if (resp.delegates && resp.delegates.length && resp.delegates[0]) {
@@ -461,7 +461,7 @@
       return deferred.promise
     }
 
-    function verifyMessage (message, publicKey, signature) {
+    function verifyMessage(message, publicKey, signature) {
       // check for hexadecimal, otherwise the signature check would may fail
       const re = /[0-9A-Fa-f]{6}/g
       if (!re.test(publicKey) || !re.test(signature)) {
@@ -483,7 +483,7 @@
       return message
     }
 
-    function signMessage (message, passphrase) {
+    function signMessage(message, passphrase) {
       const deferred = $q.defer()
       const crypto = require('crypto')
       let hash = crypto.createHash('sha256')
@@ -493,7 +493,7 @@
       return deferred.promise
     }
 
-    function signMessageWithLedger (message, path) {
+    function signMessageWithLedger(message, path) {
       const deferred = $q.defer()
       ledgerService.signMessage(path, message).then(
         (result) => {
@@ -508,8 +508,8 @@
 
     // Given a final list of delegates, create a vote assets list to be sent
     // return null if could not make it
-    function createDiffVote (address, newdelegates) {
-      function arrayObjectIndexOf (myArray, searchTerm, property) {
+    function createDiffVote(address, newdelegates) {
+      function arrayObjectIndexOf(myArray, searchTerm, property) {
         for (let i = 0, len = myArray.length; i < len; i++) {
           if (myArray[i][property] === searchTerm) return i
         }
@@ -570,7 +570,7 @@
       return assets
     }
 
-    function getSponsors () {
+    function getSponsors() {
       const deferred = $q.defer()
       const result = []
       $http.get('https://gist.githubusercontent.com/fix/a7b1d797be38b0591e725a24e6735996/raw/sponsors.json').then((resp) => {
@@ -593,7 +593,7 @@
       return deferred.promise
     }
 
-    function createVirtual (passphrase) {
+    function createVirtual(passphrase) {
       const deferred = $q.defer()
       const address = ark.crypto.getAddress(ark.crypto.getKeys(passphrase).publicKey, networkService.getNetwork().version)
       const account = getAccount(address)
@@ -608,7 +608,7 @@
       return deferred.promise
     }
 
-    function setToFolder (address, folder, amount) {
+    function setToFolder(address, folder, amount) {
       const virtual = getVirtual(address)
       const f = virtual[folder]
       if (f && amount >= 0) {
@@ -620,14 +620,14 @@
       return getVirtual(address)
     }
 
-    function deleteFolder (address, folder) {
+    function deleteFolder(address, folder) {
       const virtual = storageService.get('virtual-' + address)
       delete virtual[folder]
       storageService.set('virtual-' + address, virtual)
       return getVirtual(address)
     }
 
-    function renameFolder (address, folder, newFolder) {
+    function renameFolder(address, folder, newFolder) {
       const virtual = storageService.get('virtual-' + address)
       virtual[newFolder] = virtual[folder]
       delete virtual[folder]
@@ -635,7 +635,7 @@
       return getVirtual(address)
     }
 
-    function getVirtual (address) {
+    function getVirtual(address) {
       const virtual = storageService.get('virtual-' + address)
       if (virtual) {
         virtual.uservalue = function (folder) {
@@ -668,7 +668,7 @@
 
     const allowedDelegateNameChars = /^[a-z0-9!@$&_.]+$/
 
-    function sanitizeDelegateName (delegateName) {
+    function sanitizeDelegateName(delegateName) {
       if (!delegateName) {
         throw new Error('Delegate name is undefined')
       }

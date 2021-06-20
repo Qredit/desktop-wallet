@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
@@ -8,18 +8,18 @@
    * NetworkService
    * @constructor
    */
-  function NetworkService ($q, $http, $timeout, storageService, timeService, toastService) {
+  function NetworkService($q, $http, $timeout, storageService, timeService, toastService) {
     const _path = require('path')
-    const ark = require(_path.resolve(__dirname, '../node_modules/arkjs'))
-    const mainNetArkJsNetworkKey = 'ark'
-    const devNetArkJsNetworkKey = 'testnet'
+    const ark = require(_path.resolve(__dirname, '../node_modules/qreditjs'))
+    const mainNetQreditJsNetworkKey = 'mainnet'
+    const devNetQreditJsNetworkKey = 'testnet'
 
     let network = switchNetwork(storageService.getContext())
 
     if (!network) {
       network = switchNetwork()
     }
-    ark.crypto.setNetworkVersion(network.version || 23)
+    ark.crypto.setNetworkVersion(network.version || 75)
 
     const momentTimezone = require('moment-timezone')
     const momentRange = require('moment-range')
@@ -40,7 +40,7 @@
 
     connection.notify(peer)
 
-    function setNetwork (name, newnetwork) {
+    function setNetwork(name, newnetwork) {
       ensureValidPeerSeed(newnetwork)
 
       const n = storageService.getGlobal('networks')
@@ -48,14 +48,14 @@
       storageService.setGlobal('networks', n)
     }
 
-    function removeNetwork (name) {
+    function removeNetwork(name) {
       const n = storageService.getGlobal('networks')
       delete n[name]
       storageService.setGlobal('networks', n)
       storageService.deleteState()
     }
 
-    function createNetwork (data) {
+    function createNetwork(data) {
       ensureValidPeerSeed(data)
       const networks = storageService.getGlobal('networks')
       const deferred = $q.defer()
@@ -74,7 +74,7 @@
             newNetwork.peerseed = data.peerseed
             newNetwork.slip44 = 1 // default to testnet slip44
             newNetwork.cmcTicker = data.cmcTicker
-            deferred.resolve({name: data.name, network: newNetwork})
+            deferred.resolve({ name: data.name, network: newNetwork })
           },
           (resp) => {
             deferred.reject('Cannot connect to peer to autoconfigure the network')
@@ -84,7 +84,7 @@
       return deferred.promise
     }
 
-    function ensureValidPeerSeed (network) {
+    function ensureValidPeerSeed(network) {
       if (!network || !network.peerseed) {
         return
       }
@@ -92,7 +92,7 @@
       network.peerseed = network.peerseed.replace(/\/$/, '')
     }
 
-    function switchNetwork (newnetwork, reload) {
+    function switchNetwork(newnetwork, reload) {
       let n
       if (!newnetwork) { // perform round robin
         n = storageService.getGlobal('networks')
@@ -108,8 +108,8 @@
       n = storageService.getGlobal('networks')
       if (!n) {
         n = {
-          mainnet: createNetworkFromArkJs(mainNetArkJsNetworkKey, 0x17, 111, 'url(assets/images/images/Ark.jpg)'),
-          devnet: createNetworkFromArkJs(devNetArkJsNetworkKey, 30, 1, '#222299')
+          mainnet: createNetworkFromQreditJs(mainNetQreditJsNetworkKey, 0x4b, 111, 'url(assets/images/images/Ark.jpg)'),
+          devnet: createNetworkFromQreditJs(devNetQreditJsNetworkKey, 30, 1, '#222299')
         }
         storageService.setGlobal('networks', n)
       }
@@ -119,17 +119,17 @@
       return n[newnetwork]
     }
 
-    function createNetworkFromArkJs (arkJsNetworkKey, version, slip44, background) {
-      const arkJsNetwork = ark.networks[arkJsNetworkKey]
+    function createNetworkFromQreditJs(qreditJsNetworkKey, version, slip44, background) {
+      const qreditJsNetwork = ark.networks[qreditJsNetworkKey]
 
       return {
-        arkJsKey: arkJsNetworkKey,
-        nethash: arkJsNetwork.nethash,
-        peerseed: 'http://' + arkJsNetwork.activePeer.ip + ':' + arkJsNetwork.activePeer.port,
-        token: arkJsNetwork.token,
-        symbol: arkJsNetwork.symbol,
-        explorer: arkJsNetwork.explorer,
-        version: version,
+        qreditJsKey: qreditJsNetworkKey,
+        nethash: "7fadccaae136bfa7655aa1e1f2de440804abbf64af9f380ccfbef916e18b485c",
+        peerseed: "https://qredit.cloud/",
+        token: "XQR",
+        symbol: "XQR",
+        explorer: "https://explorer.qredit.io/#",
+        version: "75",
         slip44: slip44,
         forcepeer: false,
         background: background,
@@ -138,12 +138,12 @@
       }
     }
 
-    function tryGetPeersFromArkJs () {
-      if (!network.arkJsKey) {
+    function tryGetPeersFromQreditJs() {
+      if (!network.qreditJsKey) {
         return
       }
 
-      const arkjsNetwork = ark.networks[network.arkJsKey]
+      const arkjsNetwork = ark.networks[network.qreditJsKey]
       if (!arkjsNetwork) {
         return
       }
@@ -151,20 +151,20 @@
       return arkjsNetwork.peers
     }
 
-    function getNetwork () {
+    function getNetwork() {
       return network
     }
 
-    function getNetworkName () {
+    function getNetworkName() {
       return storageService.getContext()
     }
 
-    function getNetworks () {
+    function getNetworks() {
       return storageService.getGlobal('networks')
     }
 
-    function listenNetworkHeight () {
-      $http.get(peer.ip + '/api/blocks/getHeight', { timeout: 5000 }).then(resp => {
+    function listenNetworkHeight() {
+      $http.get(peer.ip + '/api/blocks', { timeout: 5000 }).then(resp => {
         timeService.getTimestamp().then(
           (timestamp) => {
             peer.lastConnection = timestamp
@@ -190,7 +190,7 @@
       $timeout(() => listenNetworkHeight(), 60000)
     }
 
-    function getFromPeer (api) {
+    function getFromPeer(api) {
       const deferred = $q.defer()
       peer.lastConnection = new Date()
       $http({
@@ -222,7 +222,7 @@
       return deferred.promise
     }
 
-    function broadcastTransaction (transaction, max) {
+    function broadcastTransaction(transaction, max) {
       const peers = storageService.get('peers')
       if (!peers) {
         return
@@ -237,7 +237,7 @@
       }
     }
 
-    function postTransaction (transaction, ip) {
+    function postTransaction(transaction, ip) {
       const deferred = $q.defer()
       let peerIp = ip
       if (!peerIp) {
@@ -271,7 +271,7 @@
       return deferred.promise
     }
 
-    function pickRandomPeer () {
+    function pickRandomPeer() {
       if (network.forcepeer) {
         return
       }
@@ -290,27 +290,27 @@
         }, () => findGoodPeer(storageService.get('peers'), 0))
     }
 
-    function findGoodPeer (peers, index, isStaticPeerList) {
+    function findGoodPeer(peers, index, isStaticPeerList) {
       const isPeerListValid = () => peers && index <= peers.length - 1
 
       if (!isStaticPeerList && !isPeerListValid()) {
         // we don't have any peers, that means the app is probably started for the first time
         // (and therefore we do not have a peer list in our storage)
         // and getting a peer list failed (the peerseed server may be down)
-        // in this case we try to get a peer from the hardcoded list in the arkjs config
-        peers = tryGetPeersFromArkJs()
+        // in this case we try to get a peer from the hardcoded list in the qreditjs config
+        peers = tryGetPeersFromQreditJs()
         isStaticPeerList = true
       } else if (index === 0) {
         peers = peers.sort((a, b) => b.height - a.height || a.delay - b.delay).filter(p => p.ip !== '127.0.0.1')
       }
 
-      // check again or we may have an exception in the case when we couldn't get the static peer list from arkjs
+      // check again or we may have an exception in the case when we couldn't get the static peer list from qreditjs
       if (!isPeerListValid()) {
         return
       }
 
       peer.ip = 'http://' + peers[index].ip + ':' + peers[index].port
-      getFromPeer('/api/blocks/getHeight')
+      getFromPeer('/api/blockchain')
         .then((response) => {
           if (response.success && response.height < peer.height) {
             findGoodPeer(peers, index + 1, isStaticPeerList)
@@ -325,15 +325,15 @@
         }, () => findGoodPeer(peers, index + 1, isStaticPeerList))
     }
 
-    function getPeer () {
+    function getPeer() {
       return peer
     }
 
-    function getConnection () {
+    function getConnection() {
       return connection.promise
     }
 
-    function getLatestClientVersion () {
+    function getLatestClientVersion() {
       const deferred = $q.defer()
       const url = 'https://api.github.com/repos/ArkEcosystem/ark-desktop/releases/latest'
       $http.get(url, { timeout: 5000 })

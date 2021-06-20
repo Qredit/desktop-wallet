@@ -1,15 +1,15 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
     .service('feedService', [FeedService])
 
-  function FeedService () {
+  function FeedService() {
     return {
       /**
        * Fetches and parses the RSS of an URL
        */
-      fetchAndParse (url) {
+      fetchAndParse(url) {
         const rssParser = require('rss-parser')
 
         return new Promise((resolve, reject) => {
@@ -22,8 +22,8 @@
       /**
        * Fetches and parses the RSS of ARK.io
        */
-      fetchBlogEntries () {
-        const rssUrl = 'https://blog.ark.io/feed'
+      fetchBlogEntries() {
+        const rssUrl = 'https://ark.io/blog'
         return this.fetchAndParse(rssUrl).then(parsed => parsed.feed.entries)
       }
     }

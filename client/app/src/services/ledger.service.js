@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
@@ -8,15 +8,15 @@
    * NetworkService
    * @constructor
    */
-  function LedgerService ($q, $http, $timeout, storageService, networkService) {
+  function LedgerService($q, $http, $timeout, storageService, networkService) {
     const _path = require('path')
 
     const ipcRenderer = require('electron').ipcRenderer
-    const arkjs = require(_path.resolve(__dirname, '../node_modules/arkjs'))
+    const qreditjs = require(_path.resolve(__dirname, '../node_modules/qreditjs'))
     const bip39 = require(_path.resolve(__dirname, '../node_modules/bip39'))
     const async = require('async')
 
-    function deriveAddress (path) {
+    function deriveAddress(path) {
       const result = ipcRenderer.sendSync('ledger', {
         action: 'getAddress',
         path
@@ -24,7 +24,7 @@
       return result
     }
 
-    function getBip44Accounts (slip44) {
+    function getBip44Accounts(slip44) {
       const deferred = $q.defer()
       const accounts = []
       let accountIndex = 0
@@ -43,7 +43,7 @@
             path: localpath
           })
           if (result.address) {
-            result.address = arkjs.crypto.getAddress(result.publicKey)
+            result.address = qreditjs.crypto.getAddress(result.publicKey)
             accountIndex = accountIndex + 1
             const account = storageService.get(result.address) || result
             account.ledger = localpath
@@ -90,8 +90,8 @@
       return deferred.promise
     }
 
-    function recoverBip44Accounts (backupLedgerPassphrase, slip44) {
-      const hdnode = arkjs.HDNode.fromSeedHex(bip39.mnemonicToSeedHex(backupLedgerPassphrase))
+    function recoverBip44Accounts(backupLedgerPassphrase, slip44) {
+      const hdnode = qreditjs.HDNode.fromSeedHex(bip39.mnemonicToSeedHex(backupLedgerPassphrase))
 
       const accounts = []
       let accountIndex = 0
@@ -125,7 +125,7 @@
       return accounts
     }
 
-    function signTransaction (path, transaction) {
+    function signTransaction(path, transaction) {
       return new Promise((resolve, reject) => {
         ipcRenderer.once('transactionSigned', (event, result) => {
           result.error ? reject(result.error) : resolve(result)
@@ -133,13 +133,13 @@
 
         ipcRenderer.send('ledger', {
           action: 'signTransaction',
-          data: arkjs.crypto.getBytes(transaction, true, true).toString('hex'),
+          data: qreditjs.crypto.getBytes(transaction, true, true).toString('hex'),
           path
         })
       })
     }
 
-    function signMessage (path, message) {
+    function signMessage(path, message) {
       return new Promise((resolve, reject) => {
         let hash = require('crypto').createHash('sha256')
         hash = hash.update(Buffer.from(message, 'utf-8')).digest()
@@ -156,14 +156,14 @@
       })
     }
 
-    function detect () {
+    function detect() {
       const result = ipcRenderer.sendSync('ledger', {
         action: 'detect'
       })
       return result
     }
 
-    function isAppLaunched () {
+    function isAppLaunched() {
       const result = ipcRenderer.sendSync('ledger', {
         action: 'getConfiguration'
       })

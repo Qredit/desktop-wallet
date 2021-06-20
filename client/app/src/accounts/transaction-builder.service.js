@@ -1,13 +1,13 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.accounts')
     .service('transactionBuilderService', ['$timeout', '$q', 'networkService', 'accountService', 'ledgerService', 'gettextCatalog', 'utilityService', TransactionBuilderService])
 
-  function TransactionBuilderService ($timeout, $q, networkService, accountService, ledgerService, gettextCatalog, utilityService) {
-    const ark = require(require('path').resolve(__dirname, '../node_modules/arkjs'))
+  function TransactionBuilderService($timeout, $q, networkService, accountService, ledgerService, gettextCatalog, utilityService) {
+    const ark = require(require('path').resolve(__dirname, '../node_modules/qreditjs'))
 
-    function createTransaction (deferred, config, fee, createTransactionFunc, setAdditionalTransactionPropsOnLedger) {
+    function createTransaction(deferred, config, fee, createTransactionFunc, setAdditionalTransactionPropsOnLedger) {
       let transaction
       try {
         transaction = createTransactionFunc(config)
@@ -40,14 +40,14 @@
       }
 
       if (ark.crypto.getAddress(transaction.senderPublicKey, networkService.getNetwork().version) !== config.fromAddress) {
-        deferred.reject(gettextCatalog.getString('Passphrase is not corresponding to account \'{{ address }}\'', {address: config.fromAddress}))
+        deferred.reject(gettextCatalog.getString('Passphrase is not corresponding to account \'{{ address }}\'', { address: config.fromAddress }))
         return
       }
 
       deferred.resolve(transaction)
     }
 
-    function prepareTransaction (config, prepareFunc) {
+    function prepareTransaction(config, prepareFunc) {
       const deferred = $q.defer()
       const account = accountService.getAccount(config.fromAddress)
       accountService.getFees(false).then(fees => {
@@ -56,15 +56,15 @@
       return deferred.promise
     }
 
-    function createSendTransaction (config) {
+    function createSendTransaction(config) {
       return prepareTransaction(config, (deferred, account, fees) => {
         if (!accountService.isValidAddress(config.toAddress)) {
-          deferred.reject(gettextCatalog.getString('The destination address \'{{ address }}\' is erroneous', {address: config.toAddress}))
+          deferred.reject(gettextCatalog.getString('The destination address \'{{ address }}\' is erroneous', { address: config.toAddress }))
           return
         }
 
         if (config.amount + fees.send > account.balance) {
-          deferred.reject(gettextCatalog.getString('Not enough {{ currency }} on your account \'{{ address }}\'!', {currency: networkService.getNetwork().token, address: config.fromAddress}))
+          deferred.reject(gettextCatalog.getString('Not enough {{ currency }} on your account \'{{ address }}\'!', { currency: networkService.getNetwork().token, address: config.fromAddress }))
           return
         }
 
@@ -73,15 +73,15 @@
         const secret = config.masterpassphrase || config.ledger
 
         createTransaction(deferred,
-                          config,
-                          fees.send,
-                          () => ark.transaction.createTransaction(config.toAddress,
-                                                                  config.amount,
-                                                                  config.smartbridge,
-                                                                  secret,
-                                                                  config.secondpassphrase,
-                                                                  undefined,
-                                                                  fees.send))
+          config,
+          fees.send,
+          () => ark.transaction.createTransaction(config.toAddress,
+            config.amount,
+            config.smartbridge,
+            secret,
+            config.secondpassphrase,
+            undefined,
+            fees.send))
       })
     }
 
@@ -89,7 +89,7 @@
      * Each transaction is expected to be `{ address, amount, smartbridge }`,
      * where amount is expected to be in arktoshi
      */
-    function createMultipleSendTransactions ({ publicKey, fromAddress, transactions, masterpassphrase, secondpassphrase, ledger }) {
+    function createMultipleSendTransactions({ publicKey, fromAddress, transactions, masterpassphrase, secondpassphrase, ledger }) {
       const network = networkService.getNetwork()
       const account = accountService.getAccount(fromAddress)
 
@@ -100,18 +100,18 @@
           })
 
           if (invalidAddress) {
-            return reject(new Error(gettextCatalog.getString('The destination address \'{{ address }}\' is erroneous', {address: invalidAddress})))
+            return reject(new Error(gettextCatalog.getString('The destination address \'{{ address }}\' is erroneous', { address: invalidAddress })))
           }
 
           const total = transactions.reduce((total, t) => total + t.amount + fees.send, 0)
           if (total > account.balance) {
             return reject(new Error(gettextCatalog.getString(
               'Not enough {{ currency }} on your account \'{{ address }}\' you need at least {{ amount }} to send your transactions!',
-            {
-              currency: network.token,
-              address: fromAddress,
-              amount: total
-            })))
+              {
+                currency: network.token,
+                address: fromAddress,
+                amount: total
+              })))
           }
 
           const processed = Promise.all(
@@ -145,7 +145,7 @@
                   }, 2000 * i, true, transaction)
                 } else {
                   if (ark.crypto.getAddress(transaction.senderPublicKey, network.version) !== fromAddress) {
-                    return reject(new Error(gettextCatalog.getString('Passphrase is not corresponding to account \'{{ address }}\'', {address: fromAddress})))
+                    return reject(new Error(gettextCatalog.getString('Passphrase is not corresponding to account \'{{ address }}\'', { address: fromAddress })))
                   }
 
                   resolve(transaction)
@@ -161,28 +161,28 @@
       })
     }
 
-    function createSecondPassphraseCreationTransaction (config) {
+    function createSecondPassphraseCreationTransaction(config) {
       return prepareTransaction(config, (deferred, account, fees) => {
         if (account.balance < fees.secondsignature) {
           deferred.reject(gettextCatalog.getString(
-              'Not enough {{ currency }} on your account \'{{ address }}\' you need at least {{ amount }} to create a second passphrase!',
-              {
-                currency: networkService.getNetwork().token,
-                address: config.fromAddress,
-                amount: arktoshiToArk(fees.secondsignature)
-              }
+            'Not enough {{ currency }} on your account \'{{ address }}\' you need at least {{ amount }} to create a second passphrase!',
+            {
+              currency: networkService.getNetwork().token,
+              address: config.fromAddress,
+              amount: arktoshiToArk(fees.secondsignature)
+            }
           ))
           return
         }
 
         createTransaction(deferred,
-                          config,
-                          fees.secondsignature,
-                          () => ark.signature.createSignature(config.masterpassphrase, config.secondpassphrase, fees.secondsignature))
+          config,
+          fees.secondsignature,
+          () => ark.signature.createSignature(config.masterpassphrase, config.secondpassphrase, fees.secondsignature))
       })
     }
 
-    function createDelegateCreationTransaction (config) {
+    function createDelegateCreationTransaction(config) {
       return prepareTransaction(config, (deferred, account, fees) => {
         if (account.balance < fees.delegate) {
           deferred.reject(gettextCatalog.getString(
@@ -197,13 +197,13 @@
         }
 
         createTransaction(deferred,
-                          config,
-                          fees.delegate,
-                          () => ark.delegate.createDelegate(config.masterpassphrase, config.username, config.secondpassphrase, fees.delegate))
+          config,
+          fees.delegate,
+          () => ark.delegate.createDelegate(config.masterpassphrase, config.username, config.secondpassphrase, fees.delegate))
       })
     }
 
-    function createVoteTransaction (config) {
+    function createVoteTransaction(config) {
       return prepareTransaction(config, (deferred, account, fees) => {
         if (account.balance < fees.vote) {
           deferred.reject(gettextCatalog.getString(
@@ -222,14 +222,14 @@
         const secret = config.masterpassphrase || config.ledger
 
         createTransaction(deferred,
-                          config,
-                          fees.vote,
-                          () => ark.vote.createVote(secret, config.publicKeys.split(','), config.secondpassphrase, fees.vote),
-                          (transaction) => { transaction.recipientId = config.fromAddress })
+          config,
+          fees.vote,
+          () => ark.vote.createVote(secret, config.publicKeys.split(','), config.secondpassphrase, fees.vote),
+          (transaction) => { transaction.recipientId = config.fromAddress })
       })
     }
 
-    function arktoshiToArk (value) {
+    function arktoshiToArk(value) {
       return utilityService.arktoshiToArk(value) + ' ' + networkService.getNetwork().token
     }
 
