@@ -244,7 +244,7 @@
         peerIp = peer.ip
       }
 
-      const endpoint = 'peer/transactions'
+      const endpoint = 'transactions'
 
       $http({
         url: `${peerIp}/${endpoint}`,

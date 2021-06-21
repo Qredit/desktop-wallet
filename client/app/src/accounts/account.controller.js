@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular
@@ -39,7 +39,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController (
+  function AccountController(
     accountService,
     networkService,
     pluginLoader,
@@ -248,8 +248,8 @@
     self.switchNetwork = (newNetwork, reload) => {
       if (reload) {
         dialogService.openLoadingDialog(self.currentTheme,
-                                        gettext('Switching network'),
-                                        gettext('Please wait while the the switching is in progress'))
+          gettext('Switching network'),
+          gettext('Please wait while the the switching is in progress'))
       }
       networkService.switchNetwork(newNetwork, reload)
     }
@@ -334,7 +334,7 @@
       }
     }, 2 * 1000)
 
-    function updateTicker () {
+    function updateTicker() {
       const update = () => {
         const currencyName = self.btcValueActive ? 'btc' : self.currency.name
         self.market = marketService.getPrice(currencyName)
@@ -364,8 +364,8 @@
     self.connection = networkService.getConnection()
 
     self.connection.then(
-      () => {},
-      () => {},
+      () => { },
+      () => { },
       (connectedPeer) => {
         self.connectedPeer = connectedPeer
 
@@ -382,7 +382,7 @@
       }
     )
 
-    function getAccountIcon (account) {
+    function getAccountIcon(account) {
       if (account.delegate) {
         return 'security'
       }
@@ -395,7 +395,7 @@
     }
 
     // get themes colors to show in manager appearance
-    function reloadThemes () {
+    function reloadThemes() {
       const currentThemes = $mdThemingProvider.$get().THEMES
       const mapThemes = {}
 
@@ -413,7 +413,7 @@
       return mapThemes
     }
 
-    function openExplorer (uri) {
+    function openExplorer(uri) {
       if (!self.network.explorer) {
         return
       }
@@ -421,7 +421,7 @@
       require('electron').shell.openExternal(self.network.explorer + uri)
     }
 
-    function formatErrorMessage (error) {
+    function formatErrorMessage(error) {
       let basicMessage = ''
       if (typeof error === 'string') {
         basicMessage = error
@@ -437,7 +437,7 @@
       return errorMessage
     }
 
-    function formatAndToastError (error, hideDelay = 5000) {
+    function formatAndToastError(error, hideDelay = 5000) {
       toastService.error(formatErrorMessage(error), hideDelay, true)
     }
 
@@ -451,7 +451,7 @@
     /**
      * Hide or Show the 'left' sideNav area
      */
-    function toggleAccountsList () {
+    function toggleAccountsList() {
       if ($mdMedia('md') || $mdMedia('sm')) $mdSidenav('left').toggle()
     }
 
@@ -593,7 +593,7 @@
       }
     }
 
-    function gotoAddress (address) {
+    function gotoAddress(address) {
       const currentaddress = address
 
       accountService.fetchAccountAndForget(currentaddress).then((a) => {
@@ -666,7 +666,7 @@
       })
     }
 
-    function refreshCurrentAccount (showToast) {
+    function refreshCurrentAccount(showToast) {
       if (!self.accountRefreshState.shouldRefresh()) {
         return
       }
@@ -741,7 +741,7 @@
       storageService.set('refreshAccountsAutomatically', self.refreshAccountsAutomatically, true)
     }
 
-    function togglePlayFundsReceivedSound () {
+    function togglePlayFundsReceivedSound() {
       storageService.set('playFundsReceivedSound', self.playFundsReceivedSound, true)
     }
 
@@ -750,11 +750,11 @@
 
       const accounts = self.getAllAccounts()
         .map(acc => {
-          return {name: acc.username, address: acc.address, type: gettext('Account'), icon: acc.icon}
+          return { name: acc.username, address: acc.address, type: gettext('Account'), icon: acc.icon }
         })
       let contacts = (storageService.get('contacts') || [])
         .map(c => {
-          return {name: c.name, address: c.address, type: gettext('Contact'), icon: 'account_circle'}
+          return { name: c.name, address: c.address, type: gettext('Contact'), icon: 'account_circle' }
         })
 
       contacts = contacts.concat(accounts).sort((a, b) => {
@@ -789,7 +789,7 @@
      * @param menuId
      */
     // TODO Used in dashboard navbar and accountBox
-    function selectAccount (account) {
+    function selectAccount(account) {
       const currentaddress = account.address
       self.selected = accountService.getAccount(currentaddress)
       self.selected.ledger = account.ledger
@@ -873,8 +873,8 @@
     /**
      * Add an account
      */
-    function addWatchOnlyAddress () {
-      function validateAddress () {
+    function addWatchOnlyAddress() {
+      function validateAddress() {
         const isAddress = /^[1-9A-Za-z]+$/g
         const address = $scope.address
         if (isAddress.test(address)) {
@@ -886,7 +886,7 @@
           cancel()
         } else {
           toastService.error(
-            gettextCatalog.getString('Address \'{{ address }}\' is not recognized', {address: address}),
+            gettextCatalog.getString('Address \'{{ address }}\' is not recognized', { address: address }),
             3000,
             true
           )
@@ -905,8 +905,8 @@
       })
     }
 
-    function getAllDelegates (selectedAccount) {
-      function arrayUnique (array) {
+    function getAllDelegates(selectedAccount) {
+      function arrayUnique(array) {
         const a = array.concat()
         for (let i = 0; i < a.length; ++i) {
           for (let j = i + 1; j < a.length; ++j) {
@@ -920,7 +920,7 @@
       } else return selectedAccount.delegates
     }
 
-    function timestamp (selectedAccount) {
+    function timestamp(selectedAccount) {
       const data = {
         ledger: selectedAccount.ledger,
         fromAddress: selectedAccount ? selectedAccount.address : '',
@@ -929,7 +929,7 @@
         secondpassphrase: ''
       }
 
-      function next () {
+      function next() {
         // remove bad characters before and after in case of bad copy/paste
         $scope.send.data.passphrase = $scope.send.data.passphrase.trim()
         if ($scope.send.data.secondpassphrase) {
@@ -955,7 +955,7 @@
         )
       }
 
-      function openFile () {
+      function openFile() {
         const crypto = require('crypto')
         const fs = require('fs')
 
@@ -987,13 +987,13 @@
       })
     }
 
-    function sortObj (obj) {
+    function sortObj(obj) {
       return Object.keys(obj).sort((a, b) => {
         return obj[a] - obj[b]
       })
     }
 
-    function generateDarkTheme (themeName) {
+    function generateDarkTheme(themeName) {
       const theme = themeName || self.network.theme
       let properties = $mdThemingProvider.$get().THEMES[theme]
       properties = properties || $mdThemingProvider.$get().THEMES['default']
@@ -1017,7 +1017,7 @@
 
     // Compare vibrant colors from image with default material palette
     // And returns the most similar primary and accent palette
-    function generateDynamicPalette (callback) {
+    function generateDynamicPalette(callback) {
       if (!self.network.background) {
         callback(false) // eslint-disable-line standard/no-callback-literal
         return
@@ -1073,7 +1073,7 @@
       })
     }
 
-    function manageBackgrounds () {
+    function manageBackgrounds() {
       const fs = require('fs')
       const context = storageService.getContext()
 
@@ -1139,7 +1139,7 @@
         }
       }
 
-      function upload () {
+      function upload() {
         const options = {
           title: 'Add Image',
           filters: [
@@ -1171,7 +1171,7 @@
         })
       }
 
-      function deleteImage (evt, image) {
+      function deleteImage(evt, image) {
         evt.preventDefault()
         evt.stopPropagation()
 
@@ -1189,7 +1189,7 @@
         toastService.success(gettext('Background removed successfully!'), 3000)
       }
 
-      function isImage (file) {
+      function isImage(file) {
         const extension = _path.extname(file)
         if (extension === '.jpg' || extension === '.png' || extension === '.gif') {
           return true
@@ -1197,7 +1197,7 @@
         return false
       }
 
-      function selectTheme (theme) {
+      function selectTheme(theme) {
         generateDarkTheme(theme)
         $scope.send.selectedTheme = theme
         currentNetwork.theme = theme
@@ -1205,19 +1205,19 @@
         setDarkMode()
       }
 
-      function selectBackground (background) {
+      function selectBackground(background) {
         $scope.send.selectedBackground = background
         currentNetwork.background = background
       }
 
-      function save () {
+      function save() {
         $mdDialog.hide()
         networkService.setNetwork(context, currentNetwork)
         storageService.setGlobal('userBackgrounds', backgrounds['user'])
         window.location.reload()
       }
 
-      function cancel () {
+      function cancel() {
         $mdDialog.hide()
         currentNetwork.background = initialBackground
         currentNetwork.theme = initialTheme
@@ -1225,12 +1225,12 @@
         currentTheme = initialThemeView
       }
 
-      function toggleDark (status) {
+      function toggleDark(status) {
         currentNetwork.themeDark = status
         setDarkMode()
       }
 
-      function setDarkMode () {
+      function setDarkMode() {
         if (currentNetwork.themeDark) {
           self.currentTheme = 'dark'
         } else {
@@ -1265,18 +1265,18 @@
       })
     }
 
-    function showExchangeRate () {
+    function showExchangeRate() {
       return self.network.cmcTicker || self.network.token === 'ARK'
     }
 
-    function showExchangeTab () {
+    function showExchangeTab() {
       return showExchangeRate()
     }
 
-    function manageNetworks () {
+    function manageNetworks() {
       let networks = networkService.getNetworks()
 
-      function save (networkName) {
+      function save(networkName) {
         $mdDialog.hide()
 
         const network = $scope.send.networks[networkName]
@@ -1285,7 +1285,7 @@
         self.listNetworks = networkService.getNetworks()
       }
 
-      function refreshTabs (newNetwork) {
+      function refreshTabs(newNetwork) {
         // reload networks
         const refreshedNetworks = networkService.getNetworks()
         if (newNetwork) {
@@ -1296,7 +1296,7 @@
         $scope.send.networks = refreshedNetworks
       }
 
-      function createNetwork () {
+      function createNetwork() {
         networkService.createNetwork($scope.send.createnetwork).then(
           (newNetwork) => {
             refreshTabs(newNetwork)
@@ -1305,10 +1305,10 @@
         )
       }
 
-      function removeNetwork (network) {
+      function removeNetwork(network) {
         const isActive = network === networkService.getNetworkName()
         const confirm = $mdDialog.confirm()
-          .title(gettextCatalog.getString('Remove network \'{{ network }}\'', {network: network}))
+          .title(gettextCatalog.getString('Remove network \'{{ network }}\'', { network: network }))
           .theme(self.currentTheme)
           .textContent(gettextCatalog.getString('Are you sure you want to remove this network and all data (accounts and settings) associated with it from your computer. Your accounts are still safe on the blockchain.'))
           .ok(gettextCatalog.getString('Remove from my computer all cached data from this network'))
@@ -1340,11 +1340,11 @@
         })
       }
 
-      function canCreateNetwork (network) {
+      function canCreateNetwork(network) {
         return network && network.name && network.peerseed
       }
 
-      function canUpdateNetwork (network) {
+      function canUpdateNetwork(network) {
         return network && network.token && network.symbol && network.version && network.nethash && network.slip44 && network.peerseed
       }
 
@@ -1380,7 +1380,7 @@
     }
 
     // register as delegate
-    function createDelegate (selectedAccount) {
+    function createDelegate(selectedAccount) {
       const data = {
         ledger: selectedAccount.ledger,
         fromAddress: selectedAccount.address,
@@ -1390,7 +1390,7 @@
         secondpassphrase: ''
       }
 
-      function next () {
+      function next() {
         $mdDialog.hide()
 
         let delegateName
@@ -1428,11 +1428,11 @@
 
     // Create a new cold account
     // TODO Used in dashboard navbar and accountBox
-    function createAccount () {
+    function createAccount() {
       const bip39 = require('bip39')
       const data = { passphrase: bip39.generateMnemonic(null, null, bip39.wordlists[self.getWordlistLanguage()]) }
 
-      function next () {
+      function next() {
         if (!$scope.createAccountDialog.data.showRepassphrase) {
           $scope.createAccountDialog.data.repassphrase = $scope.createAccountDialog.data.passphrase
           $scope.createAccountDialog.data.passphrase = ''
@@ -1447,7 +1447,7 @@
             accountService.createAccount($scope.createAccountDialog.data.repassphrase).then((account) => {
               self.accounts.push(account)
               toastService.success(
-                gettextCatalog.getString('Account \'{{ address }}\' successfully created!', {address: account.address}),
+                gettextCatalog.getString('Account \'{{ address }}\' successfully created!', { address: account.address }),
                 null,
                 true
               )
@@ -1472,14 +1472,14 @@
     }
 
     // TODO Used in dashboard navbar and accountBox
-    function importAccount () {
+    function importAccount() {
       const data = {
         passphrase: ''
-      // TODO second passphrase
-      // secondpassphrase: ''
+        // TODO second passphrase
+        // secondpassphrase: ''
       }
 
-      function save () {
+      function save() {
         if (!$scope.importAccountForm.$valid) {
           return
         }
@@ -1501,7 +1501,7 @@
                 if (self.accounts[i].address === account.address) {
                   toastService.error(
                     gettextCatalog.getString('Account \'{{ address }}\' has already been imported!',
-                                             {address: account.address}),
+                      { address: account.address }),
                     null,
                     true
                   )
@@ -1512,12 +1512,12 @@
               self.accounts.push(account)
               toastService.success(
                 gettextCatalog.getString('Account \'{{ address }}\' successfully imported!',
-                                         {address: account.address}),
+                  { address: account.address }),
                 null,
                 true
               )
               selectAccount(account)
-            // TODO save passphrases after we have local encrytion
+              // TODO save passphrases after we have local encrytion
             },
             formatAndToastError)
         $mdDialog.hide()
@@ -1534,7 +1534,7 @@
       })
     }
 
-    function exportAccount (account) {
+    function exportAccount(account) {
       $mdDialog.show({
         templateUrl: './src/accounts/view/exportAccount.html',
         controller: 'ExportAccountController',
@@ -1547,25 +1547,25 @@
     }
 
     // Add a second passphrase to an account
-    function createSecondPassphrase (selectedAccount) {
+    function createSecondPassphrase(selectedAccount) {
       const bip39 = require('bip39')
       const data = { secondPassphrase: bip39.generateMnemonic() }
 
       if (selectedAccount.secondSignature) {
         return formatAndToastError(
-          gettextCatalog.getString('The account \'{{ address }}\' already has a second passphrase!', {address: selectedAccount.address})
+          gettextCatalog.getString('The account \'{{ address }}\' already has a second passphrase!', { address: selectedAccount.address })
         )
       }
 
-      function warnAboutSecondPassphraseFee () {
+      function warnAboutSecondPassphraseFee() {
         accountService.getFees(true).then((fees) => {
           const secondPhraseArktoshiVal = fees['secondsignature']
           const secondPhraseArkVal = utilityService.arktoshiToArk(secondPhraseArktoshiVal, true)
           const confirm = $mdDialog.confirm({
-            title: gettextCatalog.getString('Second Passphrase fee ({{ currency }})', {currency: networkService.getNetwork().symbol}),
+            title: gettextCatalog.getString('Second Passphrase fee ({{ currency }})', { currency: networkService.getNetwork().symbol }),
             secondPhraseArkVal: secondPhraseArkVal,
             textContent: gettextCatalog.getString('WARNING! Second passphrase creation costs {{ cost }} {{ currency }}',
-                                                  {cost: secondPhraseArkVal, currency: networkService.getNetwork().token}),
+              { cost: secondPhraseArkVal, currency: networkService.getNetwork().token }),
             ok: gettextCatalog.getString('Continue'),
             cancel: gettextCatalog.getString('Cancel')
           })
@@ -1585,7 +1585,7 @@
 
       warnAboutSecondPassphraseFee()
 
-      function next () {
+      function next() {
         if (!$scope.createSecondPassphraseDialog.data.showRepassphrase) {
           $scope.createSecondPassphraseDialog.data.reSecondPassphrase = $scope.createSecondPassphraseDialog.data.secondPassphrase
           $scope.createSecondPassphraseDialog.data.secondPassphrase = ''
@@ -1610,12 +1610,12 @@
       $scope.createSecondPassphraseDialog = { data, cancel, next }
     }
 
-    function loadSignedMessages () {
+    function loadSignedMessages() {
       self.selected.signedMessages = storageService.get('signed-' + self.selected.address)
     }
 
-    function showValidateTransaction (selectedAccount, transaction, cb) {
-      function saveFile () {
+    function showValidateTransaction(selectedAccount, transaction, cb) {
+      function saveFile() {
         const fs = require('fs')
         const raw = JSON.stringify(transaction)
 
@@ -1636,7 +1636,7 @@
               )
             } else {
               toastService.success(
-                gettextCatalog.getString('Transaction file successfully saved in \'{{ fileName }}\'.', {fileName: fileName}),
+                gettextCatalog.getString('Transaction file successfully saved in \'{{ fileName }}\'.', { fileName: fileName }),
                 null,
                 true
               )
@@ -1647,7 +1647,7 @@
 
       const transactionLabel = accountService.getTransactionLabel(transaction)
 
-      function send () {
+      function send() {
         $mdDialog.hide()
 
         transaction = accountService.formatTransaction(transaction, selectedAccount.address)
@@ -1657,7 +1657,7 @@
           (transaction) => {
             selectedAccount.transactions.unshift(transaction)
             toastService.success(
-              gettextCatalog.getString('Transaction \'{{ transactionId }}\' sent with success!', {transactionId: transaction.id}),
+              gettextCatalog.getString('Transaction \'{{ transactionId }}\' sent with success!', { transactionId: transaction.id }),
               null,
               true
             )
@@ -1666,10 +1666,10 @@
               cb(transaction)
             }
           },
-         (error) => {
-           const message = gettextCatalog.getString('Failed to execute your \'{{ transactionLabel }}\' transaction!', { transactionLabel })
-           formatAndToastError({ message, error })
-         })
+          (error) => {
+            const message = gettextCatalog.getString('Failed to execute your \'{{ transactionLabel }}\' transaction!', { transactionLabel })
+            formatAndToastError({ message, error })
+          })
       }
 
       $scope.validate = {
@@ -1694,7 +1694,7 @@
       })
     }
 
-    function isBIP39 (mnemonic) {
+    function isBIP39(mnemonic) {
       const bip39 = require('bip39')
       let valid = bip39.validateMnemonic(mnemonic) || bip39.validateMnemonic(mnemonic, bip39.wordlists[self.getWordlistLanguage()])
       return valid

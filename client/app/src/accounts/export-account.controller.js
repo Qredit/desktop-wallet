@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular
@@ -18,7 +18,7 @@
       ExportAccountController
     ])
 
-  function ExportAccountController ($scope, $filter, $mdDialog, accountService, toastService, utilityService, gettextCatalog, gettext, account, theme, ARK_LAUNCH_DATE) {
+  function ExportAccountController($scope, $filter, $mdDialog, accountService, toastService, utilityService, gettextCatalog, gettext, account, theme, ARK_LAUNCH_DATE) {
     $scope.vm = {}
     $scope.vm.account = account
     $scope.vm.theme = theme
@@ -50,8 +50,8 @@
       }).catch(error => {
         if (error.transactions.length) {
           toastService.error(gettextCatalog.getString('An error occured when getting your transactions. However we still got {{ count }} transactions! The exported file contains only these!',
-                                                      {count: error.transactions.length}),
-          10000)
+            { count: error.transactions.length }),
+            10000)
           prepareFile($scope.vm.account, error.transactions, true)
         } else {
           toastService.error(gettext('An error occured when getting your transactions. Cannot export account!'), 10000)
@@ -89,27 +89,27 @@
       $mdDialog.hide()
     }
 
-    function onUpdate (updateObj) {
+    function onUpdate(updateObj) {
       $scope.vm.numberOfReceivedTransactions += updateObj.transactions.length
     }
 
-    function prepareFile (account, transactions, isInComplete) {
+    function prepareFile(account, transactions, isInComplete) {
       $scope.vm.isFinished = true
       const eol = require('os').EOL
 
       $scope.fileContent = 'Account:,' + account.address + eol +
-                           'Balance:,' + utilityService.arktoshiToArk(account.balance) + eol +
-                           'Transactions' + (isInComplete ? ' (INCOMPLETE):' : ':') + eol +
-                           'ID,Confirmations,Date,Type,Amount,From,To,Smartbridge' + eol
+        'Balance:,' + utilityService.arktoshiToArk(account.balance) + eol +
+        'Transactions' + (isInComplete ? ' (INCOMPLETE):' : ':') + eol +
+        'ID,Confirmations,Date,Type,Amount,From,To,Smartbridge' + eol
       transactions.forEach(trns => {
         $scope.fileContent += trns.id + ',' +
-                              trns.confirmations + ',' +
-                              new Date(trns.date).toISOString() + ',' +
-                              trns.label + ',' +
-                              trns.humanTotal + ',' +
-                              trns.senderId + ',' +
-                              trns.recipientId + ',' +
-                              (trns.vendorField ? trns.vendorField : '') + eol
+          trns.confirmations + ',' +
+          new Date(trns.date).toISOString() + ',' +
+          trns.label + ',' +
+          trns.humanTotal + ',' +
+          trns.senderId + ',' +
+          trns.recipientId + ',' +
+          (trns.vendorField ? trns.vendorField : '') + eol
       })
     }
   }
