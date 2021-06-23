@@ -110,8 +110,8 @@ msgstr "Arab"
 msgid "Are you sure?"
 msgstr "Are you sure?"
 
-msgid "Ark Client"
-msgstr "Ark Client"
+msgid "Qredit Client"
+msgstr "Qredit Client"
 
 msgid "Background"
 msgstr "Background"
@@ -590,8 +590,8 @@ msgstr "QR Scanner"
 msgid "Quit"
 msgstr "Quit"
 
-msgid "Quit Ark Client?"
-msgstr "Quit Ark Client?"
+msgid "Quit Qredit Client?"
+msgstr "Quit Qredit Client?"
 
 msgid "Rank"
 msgstr "Rank"

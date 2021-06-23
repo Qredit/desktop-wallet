@@ -183,7 +183,7 @@
 
     self.closeApp = function () {
       const confirm = $mdDialog.confirm()
-        .title(gettextCatalog.getString('Quit Ark Client?'))
+        .title(gettextCatalog.getString('Quit Qredit Client?'))
         .theme(self.currentTheme)
         .ok(gettextCatalog.getString('Quit'))
         .cancel(gettextCatalog.getString('Cancel'))
@@ -1092,12 +1092,6 @@
       const selectedTab = 0
 
       const backgrounds = {
-        user: {},
-        colors: {
-          'Midnight': '#2c3e50'
-        },
-        textures: {},
-        images: {}
       }
 
       const imgPath = 'assets/images'

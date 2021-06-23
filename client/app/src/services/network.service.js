@@ -62,7 +62,7 @@
         deferred.reject("Network name '" + data.name + "' already taken, please choose another one")
       } else {
         $http({
-          url: data.peerseed + '/api/loader/autoconfigure',
+          url: data.peerseed + '//api/loader/autoconfigure',
           method: 'GET',
           timeout: 5000
         }).then(
@@ -172,7 +172,7 @@
     }
 
     function listenNetworkHeight() {
-      $http.get(peer.ip + 'api/blockchain', { timeout: 5000 }).then(resp => {
+      $http.get(peer.ip + '/api/blockchain', { timeout: 5000 }).then(resp => {
         timeService.getTimestamp().then(
           (timestamp) => {
             peer.lastConnection = timestamp
@@ -202,7 +202,7 @@
       const deferred = $q.defer()
       peer.lastConnection = new Date()
       $http({
-        url: peer.ip + 'api/peers',
+        url: peer.ip + '/api/peers',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -283,7 +283,7 @@
       if (network.forcepeer) {
         return
       }
-      getFromPeer('api/peers')
+      getFromPeer('/api/peers')
         .then((response) => {
           if (response.success) {
             const regex127 = RegExp(/^(?!127\.).*/) // does not start with '127.'

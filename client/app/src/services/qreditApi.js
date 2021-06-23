@@ -9,7 +9,7 @@ var qreditApi = /** @class */ (function () {
 
   function qreditApi(apiURL) {
     if (apiURL === void 0)
-      this.apiURL = 'https://qredit.cloud/api/v2';
+      this.apiURL = 'https://qredit.cloud//api/v2';
     else
       this.apiURL = apiURL;
 

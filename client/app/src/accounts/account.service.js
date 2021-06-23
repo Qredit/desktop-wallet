@@ -86,7 +86,7 @@
         delegates: [],
         selectedVotes: []
       }
-      networkService.getFromPeer('api/wallets/' + address).then(
+      networkService.getFromPeer('/api/wallets/' + address).then(
         (resp) => {
           if (resp.data) {
             const account = resp.data.address
@@ -110,7 +110,7 @@
 
     function fetchAccountAndForget(address) {
       const deferred = $q.defer()
-      networkService.getFromPeer('api/wallets/' + address).then(
+      networkService.getFromPeer('/api/wallets/' + address).then(
         (resp) => {
           if (resp.data) {
             let account = storageService.get(address)
@@ -262,7 +262,7 @@
         store = true
       }
       const deferred = $q.defer()
-      networkService.getFromPeer('api/wallets/' + address + '/transactions?' + 'page=' + offset + '&limit=' + limit).then((resp) => {
+      networkService.getFromPeer('/api/wallets/' + address + '/transactions?' + 'page=' + offset + '&limit=' + limit).then((resp) => {
         if (resp.data) {
           for (let i = 0; i < resp.data(0).amount; i++) {
             formatTransaction(resp.data(0)[i], recipient)
@@ -380,7 +380,7 @@
         deferred.reject(gettextCatalog.getString('No publicKey'))
         return deferred.promise
       }
-      networkService.getFromPeer('api/delegates/get/?publicKey=' + publicKey).then((resp) => {
+      networkService.getFromPeer('/api/delegates/get/?publicKey=' + publicKey).then((resp) => {
         if (resp && resp.success && resp.delegate) {
           storageService.set('delegate-' + resp.delegate.address, resp.delegate)
           storageService.set('username-' + resp.delegate.address, resp.delegate.username)
@@ -394,7 +394,7 @@
 
     function getActiveDelegates() {
       const deferred = $q.defer()
-      networkService.getFromPeer('api/delegates').then((resp) => {
+      networkService.getFromPeer('/api/delegates').then((resp) => {
         if (resp && resp.data) {
           deferred.resolve(resp.data)
         } else {
@@ -413,7 +413,7 @@
         return deferred.promise
       }
       username = username.toLowerCase()
-      networkService.getFromPeer('api/delegates/' + username).then((resp) => {
+      networkService.getFromPeer('/api/delegates/' + username).then((resp) => {
         if (resp && resp.data && resp.data.username) {
           storageService.set('delegate-' + resp.data.address)
           storageService.set('username-' + resp.data.username)
@@ -432,7 +432,7 @@
         deferred.reject(gettextCatalog.getString('No search term'))
         return deferred.promise
       }
-      networkService.getFromPeer('api/delegates/search/?term=' + term).then((resp) => {
+      networkService.getFromPeer('/api/delegates/search/?term=' + term).then((resp) => {
         if (resp && resp.success && resp.delegates) {
           deferred.resolve(resp.delegates)
         } else {
@@ -576,7 +576,7 @@
       $http.get('https://gist.githubusercontent.com/fix/a7b1d797be38b0591e725a24e6735996/raw/sponsors.json').then((resp) => {
         let count = 0
         for (const i in resp.data) {
-          networkService.getFromPeer('api/delegates/get/?publicKey=' + resp.data[i].publicKey).then((resp2) => {
+          networkService.getFromPeer('/api/delegates/get/?publicKey=' + resp.data[i].publicKey).then((resp2) => {
             if (resp2.data && resp2.data.success && resp2.data.delegate) {
               result.push(resp2.data.delegate)
             }

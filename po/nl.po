@@ -110,7 +110,7 @@ msgstr "Arabisch"
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
-msgid "Ark Client"
+msgid "Qredit Client"
 msgstr "Ark client"
 
 msgid "Background"
@@ -560,8 +560,8 @@ msgstr "QR-scanner"
 msgid "Quit"
 msgstr "Ophouden"
 
-msgid "Quit Ark Client?"
-msgstr "Stoppen Ark Client?"
+msgid "Quit Qredit Client?"
+msgstr "Stoppen Qredit Client?"
 
 msgid "Rank"
 msgstr "Rang"

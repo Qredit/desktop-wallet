@@ -55,7 +55,7 @@
             storageService.set('virtual-' + account.address, account.virtual)
             accounts.push(account)
             if (account.cold) {
-              networkService.getFromPeer('api/transactions?orderBy=timestamp:desc&limit=1&recipientId=' + account.address + '&senderId=' + account.address).then(
+              networkService.getFromPeer('/api/transactions?orderBy=timestamp:desc&limit=1&recipientId=' + account.address + '&senderId=' + account.address).then(
                 (resp) => {
                   if (resp.success) {
                     empty = parseInt(resp.count) === 0

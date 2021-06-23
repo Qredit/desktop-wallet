@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   /**
@@ -7,10 +7,10 @@
   angular.module('arkclient.services')
     .service('neoApiService', ['$q', '$http', NeoApiService])
 
-  function NeoApiService ($q, $http) {
-    const baseUrl = 'https://neoscan.io/api/main_net/v1'
+  function NeoApiService($q, $http) {
+    const baseUrl = 'https://neoscan.io//api/main_net/v1'
 
-    function getTxs (address) {
+    function getTxs(address) {
       return new Promise((resolve, reject) => {
         $http.get(`${baseUrl}/get_last_transactions_by_address/${address}`)
           .then(({ data }) => {
@@ -20,7 +20,7 @@
       })
     }
 
-    function doesAddressExist (address) {
+    function doesAddressExist(address) {
       return getTxs(address)
         .then(_ => true)
         .catch(() => false)

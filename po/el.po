@@ -50,8 +50,8 @@ msgstr "Έγκριση"
 msgid "Are you sure?"
 msgstr "Είστε σίγουρος;"
 
-msgid "Ark Client"
-msgstr "Ark Client"
+msgid "Qredit Client"
+msgstr "Qredit Client"
 
 msgid "Balance"
 msgstr "Υπόλοιπο"
@@ -341,8 +341,8 @@ msgstr "Παραγωγικότητα"
 msgid "Quit"
 msgstr "Τερματισμός"
 
-msgid "Quit Ark Client?"
-msgstr "Τερματισμός του Ark Client ;"
+msgid "Quit Qredit Client?"
+msgstr "Τερματισμός του Qredit Client ;"
 
 msgid "Rank"
 msgstr "Κατάταξη"
