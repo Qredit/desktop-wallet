@@ -121,18 +121,30 @@
       const qreditJsNetwork = ark.networks[qreditJsNetworkKey]
 
       return {
-        qreditJsKey: qreditJsNetworkKey,
-        nethash: qreditJsNetwork.nethash,
-        peerseed: 'http://' + qreditJsNetwork.activePeer.ip + ':' + qreditJsNetwork.activePeer.port,
-        token: qreditJsNetwork.token,
-        symbol: qreditJsNetwork.symbol,
-        explorer: qreditJsNetwork.explorer,
-        version: version,
-        slip44: slip44,
+        qreditJsKey: "mainnet",
+        nethash: "7fadccaae136bfa7655aa1e1f2de440804abbf64af9f380ccfbef916e18b485c",
+        peerseed: "https://qredit.cloud/",
+        token: "qredit",
+        symbol: "XQR",
+        explorer: "https://explorer.qredit.io/#",
+        version: "75",
+        slip44: "2",
         forcepeer: false,
         background: background,
         theme: 'default',
         themeDark: false
+        //        qreditJsKey: qreditJsNetworkKey,
+        //        nethash: qreditJsNetwork.nethash,
+        //        peerseed: 'http://' + qreditJsNetwork.activePeer.ip + ':' + qreditJsNetwork.activePeer.port,
+        //        token: qreditJsNetwork.token,
+        //        symbol: qreditJsNetwork.symbol,
+        //        explorer: qreditJsNetwork.explorer,
+        //        version: version,
+        //        slip44: slip44,
+        //        forcepeer: false,
+        //        background: background,
+        //        theme: 'default',
+        //        themeDark: false
       }
     }
 
@@ -162,7 +174,7 @@
     }
 
     function listenNetworkHeight() {
-      $http.get(peer.ip + 'api/blockchain', { timeout: 5000 }).then(resp => {
+      $http.get(peer.ip + '/api/blockchain', { timeout: 5000 }).then(resp => {
         timeService.getTimestamp().then(
           (timestamp) => {
             peer.lastConnection = timestamp
@@ -192,7 +204,7 @@
       const deferred = $q.defer()
       peer.lastConnection = new Date()
       $http({
-        url: peer.ip + 'api/peers',
+        url: peer.ip + '/api/peers',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -273,7 +285,7 @@
       if (network.forcepeer) {
         return
       }
-      getFromPeer('api/peers')
+      getFromPeer('/api/peers')
         .then((response) => {
           if (response.success) {
             const regex127 = RegExp(/^(?!127\.).*/) // does not start with '127.'
@@ -308,12 +320,12 @@
       }
 
       peer.ip = 'http://' + peers[index].ip + ':' + peers[index].port
-      getFromPeer('/api/blockchain')
+      getFromPeer('/api/peers')
         .then((response) => {
-          if (response.success && response.height < peer.height) {
+          if (response.data) {              //< peer.height) {
             findGoodPeer(peers, index + 1, isStaticPeerList)
           } else {
-            peer.height = response.height
+            peer.height = response.data(0).height
             // if we had a static peer list, we now try to get a dynamic peer list
             // because now we know the current peer does work and we don't want to keep the hardcoded peers
             if (isStaticPeerList) {

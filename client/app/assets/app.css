@@ -9,6 +9,14 @@ body {
     min-width: 800px;
 }
 
+.md-content {
+    background: #ffffff00!important;
+}
+
+md-content.md-dark-theme {
+    background: #ffffff00!important;
+}
+
 .md-select-menu-container {
     z-index: 100;
 }
@@ -641,3 +649,5 @@ md-toast.announcement > .md-toast-content a {
 
   margin: 40px auto 60px auto;
 }
+
+
