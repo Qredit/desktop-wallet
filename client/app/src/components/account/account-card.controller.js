@@ -49,7 +49,7 @@
         }
       }
 
-
+      //    add(gettext('Timestamp Document'), 'verified_user')
 
       if (!account.secondSignature && !account.ledger) {
         add(gettext('Second Passphrase'), 'lock')

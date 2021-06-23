@@ -122,15 +122,25 @@
 
       return {
         qreditJsKey: qreditJsNetworkKey,
-        nethash: qreditJsNetwork.nethash,
-        peerseed: 'http://' + qreditJsNetwork.activePeer.ip + ':' + qreditJsNetwork.activePeer.port,
-        token: qreditJsNetwork.token,
-        symbol: qreditJsNetwork.symbol,
-        explorer: qreditJsNetwork.explorer,
-        version: version,
+        nethash: "7fadccaae136bfa7655aa1e1f2de440804abbf64af9f380ccfbef916e18b485c",
+        peerseed: "https://qredit.cloud/",
+        token: "XQR",
+        symbol: "XQR",
+        explorer: "https://explorer.qredit.io/#",
+        version: "75",
         slip44: slip44,
         forcepeer: false,
         background: background,
+        //        qreditJsKey: qreditJsNetworkKey,
+        //        nethash: qreditJsNetwork.nethash,
+        //        peerseed: 'http://' + qreditJsNetwork.activePeer.ip + ':' + qreditJsNetwork.activePeer.port,
+        //        token: qreditJsNetwork.token,
+        //        symbol: qreditJsNetwork.symbol,
+        //        explorer: qreditJsNetwork.explorer,
+        //        version: version,
+        //        slip44: slip44,
+        //        forcepeer: false,
+        //        background: background,
         theme: 'default',
         themeDark: false
       }
@@ -167,7 +177,7 @@
           (timestamp) => {
             peer.lastConnection = timestamp
             if (resp.data) {
-              if (resp.data.block.height) {
+              if (resp.data) {
                 peer.isConnected = false
                 peer.error = 'Node is experiencing sychronisation issues'
                 connection.notify(peer)
