@@ -34,16 +34,16 @@ describe('transactionSenderService', () => {
     beforeEach(() => {
       module('arkclient.accounts', $provide => {
         accountServiceMock = {
-          loadAllAccounts () { return ACCOUNTS },
+          loadAllAccounts() { return ACCOUNTS },
           getActiveDelegates: angular.noop,
           getDelegateByUsername: angular.noop,
           getFees: sinon.stub().resolves()
         }
         networkServiceMock = {
-          getLatestClientVersion () { return new Promise((resolve, reject) => resolve('0.0.0')) },
-          getNetwork () { return { theme: 'default', themeDark: false } },
-          getNetworks () {},
-          getConnection () { return new Promise((resolve, reject) => resolve()) }
+          getLatestClientVersion() { return new Promise((resolve, reject) => resolve('0.0.0')) },
+          getNetwork() { return { theme: 'default', themeDark: false } },
+          getNetworks() { },
+          getConnection() { return new Promise((resolve, reject) => resolve()) }
         }
         pluginLoaderMock = {
           triggerEvent: sinon.stub()
@@ -51,7 +51,7 @@ describe('transactionSenderService', () => {
         storageServiceMock = {
           get: sinon.stub().returns(['test_contact']),
           set: sinon.stub(),
-          getContext () {}
+          getContext() { }
         }
 
         ledgerServiceMock = {}
@@ -59,21 +59,21 @@ describe('transactionSenderService', () => {
         toastServiceMock = {}
 
         const themeMock = {
-          primaryPalette () { return this },
-          accentPalette () { return this },
-          warnPalette () { return this },
-          backgroundPalette () { return this },
-          dark () { return this }
+          primaryPalette() { return this },
+          accentPalette() { return this },
+          warnPalette() { return this },
+          backgroundPalette() { return this },
+          dark() { return this }
         }
 
         mdThemingProviderMock = {
-          theme () { return themeMock },
-          $get () {
+          theme() { return themeMock },
+          $get() {
             return {
               THEMES: {
                 default: { colors: { primary: {}, accent: {}, warn: {}, background: {} } }
               },
-              generateTheme () {}
+              generateTheme() { }
             }
           }
         }
@@ -145,7 +145,7 @@ describe('transactionSenderService', () => {
           const selectedAccount = {}
 
           transactionSenderService.openDialogIn($scope, accountCtrl, selectedAccount)
-          // @see https://github.com/ArkEcosystem/ark-desktop/issues/385
+          // @see https://github.com/qredit/ark-desktop/issues/385
           fillValidForm({ amount: 1.0440473 })
           $scope.submit(tab)
           expect(spy.firstCall.args[0].amount).to.equal(104404730)

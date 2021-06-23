@@ -12,7 +12,6 @@
     const _path = require('path')
     const ark = require(_path.resolve(__dirname, '../node_modules/qreditjs'))
     const mainNetQreditJsNetworkKey = 'mainnet'
-    const devNetQreditJsNetworkKey = 'testnet'
 
     let network = switchNetwork(storageService.getContext())
 
@@ -109,7 +108,6 @@
       if (!n) {
         n = {
           mainnet: createNetworkFromQreditJs(mainNetQreditJsNetworkKey, 0x4b, 111, 'url(assets/images/images/Ark.jpg)'),
-          devnet: createNetworkFromQreditJs(devNetQreditJsNetworkKey, 30, 1, '#222299')
         }
         storageService.setGlobal('networks', n)
       }
@@ -124,12 +122,12 @@
 
       return {
         qreditJsKey: qreditJsNetworkKey,
-        nethash: "7fadccaae136bfa7655aa1e1f2de440804abbf64af9f380ccfbef916e18b485c",
-        peerseed: "https://qredit.cloud/",
-        token: "XQR",
-        symbol: "XQR",
-        explorer: "https://explorer.qredit.io/#",
-        version: "75",
+        nethash: qreditJsNetwork.nethash,
+        peerseed: 'http://' + qreditJsNetwork.activePeer.ip + ':' + qreditJsNetwork.activePeer.port,
+        token: qreditJsNetwork.token,
+        symbol: qreditJsNetwork.symbol,
+        explorer: qreditJsNetwork.explorer,
+        version: version,
         slip44: slip44,
         forcepeer: false,
         background: background,
@@ -143,12 +141,12 @@
         return
       }
 
-      const arkjsNetwork = ark.networks[network.qreditJsKey]
-      if (!arkjsNetwork) {
+      const qreditjsNetwork = qredit.networks[network.qreditJsKey]
+      if (!qreditjsNetwork) {
         return
       }
 
-      return arkjsNetwork.peers
+      return qreditjsNetwork.peers
     }
 
     function getNetwork() {
@@ -164,18 +162,18 @@
     }
 
     function listenNetworkHeight() {
-      $http.get(peer.ip + '/api/blocks', { timeout: 5000 }).then(resp => {
+      $http.get(peer.ip + 'api/blockchain', { timeout: 5000 }).then(resp => {
         timeService.getTimestamp().then(
           (timestamp) => {
             peer.lastConnection = timestamp
-            if (resp.data && resp.data.success) {
-              if (peer.height === resp.data.height) {
+            if (resp.data) {
+              if (resp.data.block.height) {
                 peer.isConnected = false
                 peer.error = 'Node is experiencing sychronisation issues'
                 connection.notify(peer)
                 pickRandomPeer()
               } else {
-                peer.height = resp.data.height
+                peer.height = resp.data.block.height
                 peer.isConnected = true
                 connection.notify(peer)
               }
@@ -194,7 +192,7 @@
       const deferred = $q.defer()
       peer.lastConnection = new Date()
       $http({
-        url: peer.ip + api,
+        url: peer.ip + 'api/peers',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -258,7 +256,7 @@
           nethash: network.nethash
         }
       }).then((resp) => {
-        if (resp.data.success) {
+        if (resp.data) {
           // we make sure that tx is well broadcasted
           if (!ip) {
             broadcastTransaction(transaction)
@@ -275,7 +273,7 @@
       if (network.forcepeer) {
         return
       }
-      getFromPeer('/api/peers')
+      getFromPeer('api/peers')
         .then((response) => {
           if (response.success) {
             const regex127 = RegExp(/^(?!127\.).*/) // does not start with '127.'
@@ -335,7 +333,7 @@
 
     function getLatestClientVersion() {
       const deferred = $q.defer()
-      const url = 'https://api.github.com/repos/ArkEcosystem/ark-desktop/releases/latest'
+      const url = 'https://api.github.com/repos/qredit/desktop-wallet/releases/latest'
       $http.get(url, { timeout: 5000 })
         .then((res) => {
           deferred.resolve(res.data.tag_name)

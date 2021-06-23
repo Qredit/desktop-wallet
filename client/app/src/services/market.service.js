@@ -1,16 +1,16 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
     .service('marketService', ['$q', '$http', 'storageService', 'networkService', MarketService])
 
-  function MarketService ($q, $http, storageService, networkService) {
+  function MarketService($q, $http, storageService, networkService) {
     const baseUrl = 'https://min-api.cryptocompare.com'
     const tickerEndpoint = 'data/pricemultifull'
     const currencies = ['BTC', 'AUD', 'BRL', 'CAD', 'CHF', 'CNY', 'EUR', 'GBP', 'HKD', 'IDR', 'INR', 'JPY', 'KRW', 'MXN', 'RUB', 'USD']
     const storageKey = 'marketTicker'
     const network = networkService.getNetwork()
-    const symbol = network.cmcTicker || 'ARK'
+    const symbol = network.cmcTicker || 'XQR'
 
     const saveTicker = (ticker) => {
       const symbol = ticker.symbol
@@ -43,7 +43,7 @@
     const fetchTicker = () => {
       const deferred = $q.defer()
       const uri = `${baseUrl}/${tickerEndpoint}?fsyms=${symbol}&tsyms=${currencies.join(',')}`
-      $http.get(uri, {headers: {'Cache-Control': 'no-cache'}})
+      $http.get(uri, { headers: { 'Cache-Control': 'no-cache' } })
         .then(({ data }) => {
           const json = data['RAW'][symbol] || data['RAW'][symbol.toUpperCase()]
           if (!json) deferred.reject('Failed to find market price.')

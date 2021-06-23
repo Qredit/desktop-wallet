@@ -1094,10 +1094,7 @@
       const backgrounds = {
         user: {},
         colors: {
-          'Midnight': '#2c3e50',
-          'Asbestos': '#7f8c8d',
-          'Wisteria': '#674172',
-          'Belize Hole': '#2980b9'
+          'Midnight': '#2c3e50'
         },
         textures: {},
         images: {}

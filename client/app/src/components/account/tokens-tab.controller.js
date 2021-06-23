@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   /**
@@ -8,15 +8,15 @@
 
   angular
     .module('arkclient.components')
-    .component('offchainTab', {
-      templateUrl: 'src/components/account/templates/offchain-tab.html',
+    .component('tokensTab', {
+      templateUrl: 'src/components/account/templates/tokens-tab.html',
       bindings: {
         accountCtrl: '='
       },
-      controller: OffchainTabController
+      controller: TokensTabController
     })
 
-  function OffchainTabController ($scope) {
+  function TokensTabController($scope) {
     this.$onInit = () => {
       this.ul = this.accountCtrl
     }

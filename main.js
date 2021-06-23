@@ -45,17 +45,17 @@ if (shouldQuit) {
   app.exit()
 }
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.t
   const iconpath = _path.resolve(__dirname, '/client/ark.png')
-  let {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
+  let { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
 
   let mainWindowState = windowStateKeeper({
     defaultWidth: width - 100,
     defaultHeight: height - 100
   })
 
-  mainWindow = new BrowserWindow({width: mainWindowState.width, height: mainWindowState.height, x: mainWindowState.x, y: mainWindowState.y, center: true, icon: iconpath, resizable: true, frame: true, show: false})
+  mainWindow = new BrowserWindow({ width: mainWindowState.width, height: mainWindowState.height, x: mainWindowState.x, y: mainWindowState.y, center: true, icon: iconpath, resizable: true, frame: true, show: false })
   mainWindow.setContentProtection(true)
   mainWindowState.manage(mainWindow)
   // and load the index.html of the app.
@@ -97,11 +97,11 @@ function createWindow () {
             ark.signPersonalMessage_async(arg.path, Buffer.from(arg.data)
               .toString('hex'))
               .then((result) => event.sender.send('messageSigned', result))
-              .fail((error) => event.sender.send('messageSigned', {error: error}))
+              .fail((error) => event.sender.send('messageSigned', { error: error }))
           } else if (arg.action === 'signTransaction') {
             ark.signTransaction_async(arg.path, arg.data)
               .then((result) => event.sender.send('transactionSigned', result))
-              .fail((error) => event.sender.send('transactionSigned', {error: error}))
+              .fail((error) => event.sender.send('transactionSigned', { error: error }))
           } else if (arg.action === 'getAddress') {
             ark.getAddress_async(arg.path)
               .then((result) => { event.returnValue = result })
@@ -147,7 +147,7 @@ function createWindow () {
       package_json_dir: __dirname,
       copyright: 'Copyright (c) 2017 ARK',
       homepage: 'https://ark.io/',
-      bug_report_url: 'https://github.com/ArkEcosystem/ark-desktop/issues'
+      bug_report_url: 'https://github.com/qredit/ark-desktop/issues'
     })
   }
 
@@ -175,7 +175,7 @@ function createWindow () {
         { role: 'paste' },
         { role: 'selectall' },
         { type: 'separator' },
-        { label: 'Print Page', accelerator: 'CmdOrCtrl+P', click: function () { mainWindow.webContents.print({printBackground: true}) } }
+        { label: 'Print Page', accelerator: 'CmdOrCtrl+P', click: function () { mainWindow.webContents.print({ printBackground: true }) } }
       ]
     }, {
       role: 'window',
@@ -189,7 +189,7 @@ function createWindow () {
       submenu: [
         {
           label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://ark.io') }
+          click() { require('electron').shell.openExternal('https://ark.io') }
         },
         { label: 'Reload App', accelerator: 'CmdOrCtrl+R', click: function () { mainWindow.reload() } },
         { label: 'Open Dev Tools', accelerator: 'CmdOrCtrl+D', click: function () { mainWindow.webContents.openDevTools() } }
@@ -240,13 +240,13 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     if (ledgerWorker.connected) {
-      ledgerWorker.send({quit: true})
+      ledgerWorker.send({ quit: true })
     }
     mainWindow = null
   })
 }
 
-function configureReload () {
+function configureReload() {
   elemon({
     app: app,
     mainFile: 'main.js',
@@ -256,7 +256,7 @@ function configureReload () {
   })
 }
 
-function shouldDisableScreenshotProtection (arugments) {
+function shouldDisableScreenshotProtection(arugments) {
   return arugments && arugments.some(v => v && typeof v === 'string' && v.toLowerCase() === '--disablescreenshotprotection')
 }
 
@@ -303,7 +303,7 @@ app.on('open-url', (event, url) => {
 })
 
 // enables/disables and updates the screen shot protection item menu
-function updateScreenshotProtectionItem () {
+function updateScreenshotProtectionItem() {
   if (menu == null || template == null) {
     return
   }
@@ -318,7 +318,7 @@ function updateScreenshotProtectionItem () {
   Menu.setApplicationMenu(menu)
 }
 
-function getScreenshotProtectionLabel () {
+function getScreenshotProtectionLabel() {
   if (process.platform === 'linux') {
     return 'Screenshot Protection Not Available On Linux'
   } else if (enableScreenshotProtection) {
@@ -328,7 +328,7 @@ function getScreenshotProtectionLabel () {
   }
 }
 
-function broadcastURI (uri) {
+function broadcastURI(uri) {
   if (!uri || typeof uri !== 'string') return
 
   if (mainWindow && mainWindow.webContents) mainWindow.webContents.send('uri', uri)
