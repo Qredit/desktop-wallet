@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   /**
@@ -16,26 +16,27 @@
       controller: ['$scope', 'networkService', 'accountService', 'utilityService', 'gettextCatalog', 'gettext', 'toastService', '$timeout', 'marketService', AccountBoxController]
     })
 
-  function AccountBoxController ($scope, networkService, accountService, utilityService, gettextCatalog, gettext, toastService, $timeout, marketService) {
+  function AccountBoxController($scope, networkService, accountService, utilityService, gettextCatalog, gettext, toastService, $timeout, marketService) {
     this.$onInit = () => {
       // Alias that is used on the template
       this.ac = this.accountCtrl
 
       this.myAccountsType = this.createAccountType(gettext('My Accounts'),
-                                                   this.ac.myAccounts,
-                                                   this.ac.getAllAccounts,
-                                                   utilityService.createRefreshState(gettext('Accounts refreshed'), gettext('Could not refresh accounts')),
-                                                   this.ac.createAccount,
-                                                   gettext('Create Account'),
-                                                   this.ac.importAccount,
-                                                   gettext('Import Account'))
+        this.ac.myAccounts,
+        this.ac.getAllAccounts,
+        utilityService.createRefreshState(gettext('Accounts refreshed'), gettext('Could not refresh accounts')),
+        this.ac.createAccount,
+        gettext('Create Account'),
+        this.ac.importAccount,
+        gettext('Import Account'))
+
 
       this.contactsType = this.createAccountType(gettext('Contacts'),
-                                                 this.addressbookCtrl.getContacts,
-                                                 this.addressbookCtrl.getContacts,
-                                                 utilityService.createRefreshState(gettext('Contacts refreshed'), gettext('Could not refresh contacts')),
-                                                 () => this.addressbookCtrl.addAddressbookContact(() => this.refreshAccounts()),
-                                                 gettext('Add Contact'))
+        this.addressbookCtrl.getContacts,
+        this.addressbookCtrl.getContacts,
+        utilityService.createRefreshState(gettext('Contacts refreshed'), gettext('Could not refresh contacts')),
+        () => this.addressbookCtrl.addAddressbookContact(() => this.refreshAccounts()),
+        gettext('Add Contact'))
 
       if (this.myAccountsType.getAccountsToRefresh().length || !this.contactsType.getAccountsToRefresh().length) {
         this.selectedAccountType = this.myAccountsType
@@ -47,24 +48,24 @@
 
       let didInitialRefresh = false
       networkService.getConnection()
-        .then(() => {},
-              () => {},
-              (connectedPeer) => {
-                if (connectedPeer.isConnected && !didInitialRefresh) {
-                  $timeout(this.refreshAccounts, 500)
-                  didInitialRefresh = true
-                }
-              })
+        .then(() => { },
+          () => { },
+          (connectedPeer) => {
+            if (connectedPeer.isConnected && !didInitialRefresh) {
+              $timeout(this.refreshAccounts, 500)
+              didInitialRefresh = true
+            }
+          })
     }
 
     this.createAccountType = (title,
-                              getDisplayAccountsFunc,
-                              getAccountsToRefreshFunc,
-                              refreshState,
-                              createAccountFunc,
-                              createAccountText,
-                              importAccountFunc,
-                              importAccountText) => {
+      getDisplayAccountsFunc,
+      getAccountsToRefreshFunc,
+      refreshState,
+      createAccountFunc,
+      createAccountText,
+      importAccountFunc,
+      importAccountText) => {
       return {
         title: gettextCatalog.getString(title),
         getDisplayAccounts: getDisplayAccountsFunc,
@@ -79,8 +80,8 @@
 
     this.refreshAccounts = (showToast) => {
       this.refreshAccountBalances(showToast,
-                                  this.selectedAccountType.getAccountsToRefresh(),
-                                  this.selectedAccountType.refreshState)
+        this.selectedAccountType.getAccountsToRefresh(),
+        this.selectedAccountType.refreshState)
     }
 
     this.refreshAccountBalances = (showToast, accounts, refreshState) => {
