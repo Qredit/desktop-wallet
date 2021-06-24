@@ -243,7 +243,7 @@
       networkService.getFromPeer('/api/node/configuration')
         .then((resp) => {
           if (resp.data) {
-          
+
             thisfees = resp.data.constants.staticFees.fees;
             thisfees.send = resp.data.constants.staticFees.fees.transfer;
             thisfees.secondsignature = resp.data.constants.staticFees.fees.secondSignature;
@@ -252,7 +252,7 @@
 
             self.cachedFees = thisfees
             deferred.resolve(thisfees)
-            
+
           } else {
             deferred.resolve(self.defaultFees)
           }
@@ -267,15 +267,15 @@
         offset = 1
       }
       if (!limit) {
-        limit = 50
+        limit = 100
       }
       if (!store) {
         store = true
       }
-            
+
       const deferred = $q.defer()
       networkService.getFromPeer('/api/wallets/' + address + '/transactions?' + 'page=' + offset + '&limit=' + limit).then((resp) => {
- 
+
         if (resp.data) {
 
           var txlist = [];

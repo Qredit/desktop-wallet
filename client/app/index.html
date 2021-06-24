@@ -78,7 +78,7 @@
           <main-sidenav account-ctrl="ul" address-book-ctrl="ab"></main-sidenav>
         </md-sidenav>
 
-        <md-container flex layout="column" id="content" style="background:#ffffff00;">
+        <md-content flex layout="column" style="background:#ffffff00;border-radius:25px;margin:15px;">
           <account-card account-ctrl="ul" address-book-ctrl="ab"></account-card>
 
           <md-tabs flex="100"
@@ -93,8 +93,8 @@
             <delegate-tab account-ctrl="ul" ng-if="ul.selected.delegate"></delegate-tab>
           </md-tabs>
 
-        </md-container>
-      </md-container>
+          </md-card>
+        </md-content>
     </div>
   </div>
   </div>
