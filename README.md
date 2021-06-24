@@ -1,6 +1,6 @@
 ![QREDIT-DESKTOP](/desktop-wallet.png)
 
-[![Build Status](https://travis-ci.org/qredit/desktop-wallet.svg?branch=master)](https://travis-ci.org/qredit/desktop-wallet)
+[![Build Status](https://travis-ci.com/qredit/desktop-wallet.svg?branch=master)](https://travis-ci.com/qredit/desktop-wallet)
 [![Github Latest Release](https://img.shields.io/github/release/qredit/desktop-wallet.svg)](https://github.com/qredit/desktop-wallet/releases/latest)
 [![Github Downloads](https://img.shields.io/github/downloads/qredit/desktop-wallet/latest/total.svg?logo=github)](https://github.com/qredit/desktop-wallet/releases/latest)
 
