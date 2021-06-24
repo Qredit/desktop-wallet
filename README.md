@@ -8,8 +8,6 @@
 ## Download
 [Latest Release](https://github.com/qredit/desktop-wallet/releases)
 
-## Installing via Package Managers
-
 ## Features
 * Available on ***Windows***, ***Linux*** (Ubuntu/Debian) and ***MacOSX*** (signed).
 * QSLP tokens enabled for Qredit and Ark Blockchain

@@ -244,11 +244,11 @@
         .then((resp) => {
           if (resp.data) {
 
-            thisfees = resp.data.constants.staticFees.fees;
-            thisfees.send = resp.data.constants.staticFees.fees.transfer;
-            thisfees.secondsignature = resp.data.constants.staticFees.fees.secondSignature;
-            thisfees.delegate = resp.data.constants.staticFees.fees.delegateRegistration;
-            thisfees.multisignature = resp.data.constants.staticFees.fees.multiSignature;
+            thisfees = resp.data.constants.fees.staticFees;
+            thisfees.send = resp.data.constants.fees.staticFees.transfer;
+            thisfees.secondsignature = resp.data.constants.fees.staticFees.secondSignature;
+            thisfees.delegate = resp.data.constants.fees.staticFees.delegateRegistration;
+            thisfees.multisignature = resp.data.constants.fees.staticFees.multiSignature;
 
             self.cachedFees = thisfees
             deferred.resolve(thisfees)
@@ -685,6 +685,9 @@
       }
       return virtual
     }
+
+
+
 
     const allowedDelegateNameChars = /^[a-z0-9!@$&_.]+$/
 

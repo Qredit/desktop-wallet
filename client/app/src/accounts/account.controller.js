@@ -417,9 +417,9 @@
       if (!self.network.explorer) {
         return
       }
-
       require('electron').shell.openExternal(self.network.explorer + uri)
     }
+
 
     function formatErrorMessage(error) {
       let basicMessage = ''
@@ -1683,6 +1683,25 @@
         scope: $scope,
         templateUrl: './src/accounts/view/validateTransactionDialog.html'
       })
+    }
+
+    //doto
+    function StringService() {
+      const emoji = require('node-emoji')
+      return
+
+      emojify(text)
+      var isjson = 0
+      try {
+        var jsondata = JSON.parse(text)
+        isjson = 1
+      } catch (e) {
+      }
+      if (isjson == 1 && jsondata.qslp1) {
+        return 'QSLP-1 Transaction'
+      } else {
+        return emoji.emojify(text)
+      }
     }
 
     function isBIP39(mnemonic) {

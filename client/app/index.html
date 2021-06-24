@@ -70,30 +70,29 @@
 
     <div class="account-view" ng-if="ul.selected" layout="column" flex>
 
-      <md-container flex layout="row" style="margin:5px;border-radius:25px;background:#ffffff00!important;">
+      <md-container flex layout="row" style="margin:5px;border-radius:20px;background:#ffffff00!important;">
 
-        <md-sidenav style="margin-top:10px;margin-bottom:15px;margin-left:25px;margin-right:0px;border-radius:25px;"
+        <md-sidenav style="margin-top:10px;margin-bottom:15px;margin-left:25px;margin-right:0px;border-radius:20px;"
           ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-md')" md-component-id="left"
           class="md-whiteframe-z2">
           <main-sidenav account-ctrl="ul" address-book-ctrl="ab"></main-sidenav>
         </md-sidenav>
 
-        <md-content flex layout="column" style="background:#ffffff00;border-radius:25px;margin:15px;">
+        <md-content flex layout="column" style="background:#ffffff00;border-radius:20px;margin:15px;">
           <account-card account-ctrl="ul" address-book-ctrl="ab"></account-card>
 
           <md-tabs flex="100"
-            style="margin:5px;border-radius:25px;background:#fff;box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);">
+            style="margin:5px;border-radius:25px;box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);">
             <div ng-controller="AccountTransactionsController as transactionsCtrl">
               <transaction-tab account-ctrl="ul" transactions-ctrl="transactionsCtrl"></transaction-tab>
             </div>
             <tokens-tab account-ctrl="ul"></tokens-tab>
-            <tokensbrowser-tab account-ctrl="ul"></tokensbrowser-tab>
             <votes-tab account="ul.selected" account-ctrl="ul" theme="ul.currentTheme"></votes-tab>
             <exchange-tab account-ctrl="ul" ng-if="ul.showExchangeTab()"></exchange-tab>
             <delegate-tab account-ctrl="ul" ng-if="ul.selected.delegate"></delegate-tab>
           </md-tabs>
 
-          </md-card>
+
         </md-content>
     </div>
   </div>
@@ -150,11 +149,13 @@
   <script src="src/components/account/main-sidenav.controller.js"></script>
   <script src="src/components/account/account-card.controller.js"></script>
   <script src="src/components/account/transaction-tab.controller.js"></script>
+  <script src="src/components/account/exchange-tab.controller.js"></script>
+
   <script src="src/components/account/votes-tab/vote.dialog.controller.js"></script>
   <script src="src/components/account/votes-tab/votes-tab.controller.js"></script>
-  <script src="src/components/account/exchange-tab.controller.js"></script>
-  <script src="src/components/account/tokens-tab.controller.js"></script>
-  <script src="src/components/account/tokensbrowser-tab.controller.js"></script>
+
+  <script src="src/components/account/tokens-tab/tokens-tab.controller.js"></script>
+
   <script src="src/components/account/delegate-tab.controller.js"></script>
   <script src="src/components/qr-scanner/qr-scanner.controller.js"></script>
   <script src="src/components/qr-scanner/qr-scanner.directive.js"></script>

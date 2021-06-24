@@ -1,0 +1,60 @@
+<md-tab>
+  <md-tab-label>
+    <translate>QSLP Tokens</translate>
+  </md-tab-label>
+  <md-tab-body>
+
+    <div>
+      <md-content class="md-padding">
+        <md-tabs md-dynamic-height md-stretch-tabs style="border-top:1px solid #dcdcdc;">
+          <md-tab label="About QSLP">
+            <p>info page about QSLP</p>
+          </md-tab>
+          <md-tab label="Your Tokens">
+            <p>Your tokens table goes here (on click shows dialog with send,pause,resume, and other options)</p>
+            <md-table-container flex="100">
+              <table md-table>
+                <thead md-head md-order="query.order">
+                  <tr md-row>
+                    <th md-column md-order-by="symbol">
+                      <translate>Symbol</translate>
+                    </th>
+                    <th md-column md-order-by="tokenname">
+                      <translate>Token Name</translate>
+                    </th>
+                    <th md-column md-order-by="balance">
+                      <translate>Balance</translate>
+                    </th>
+                    <th md-column md-order-by="paused">
+                      <translate>Paused</translate>
+                    </th>
+                    <th md-column md-order-by="tokenid">
+                      <translate>Token ID (onclick is explorer)</translate>
+                    </th>
+                    <th md-column>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row>
+                    <td md-cell>MYQSLP</td>
+                    <td md-cell>MY QSLP1</td>
+                    <td md-cell>10 567,78977246</td>
+                    <td md-cell>No</td>
+                    <td md-cell>8b5797626629ecddb1b5e7a93851f22e</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </md-tab>
+          <md-tab label="QSLP Transactions">
+            <p>All QSLP Transactions on this address (limit 50)</p>
+          </md-tab>
+          <md-tab label="Create Tokens">
+            <p>page with token creation template</p>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+    </div>
+  </md-tab-body>
+</md-tab>
