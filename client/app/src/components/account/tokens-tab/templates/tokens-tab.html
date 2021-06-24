@@ -1,3 +1,11 @@
+<!--
+
+  Mike, use the link below.
+
+  source: https://material.angularjs.org/latest/demo/input
+
+-->
+
 <md-tab>
   <md-tab-label>
     <translate>QSLP Tokens</translate>
@@ -11,7 +19,7 @@
             <p>info page about QSLP</p>
           </md-tab>
           <md-tab label="Your Tokens">
-            <p>Your tokens table goes here (on click shows dialog with send,pause,resume, and other options)</p>
+
             <md-table-container flex="100">
               <table md-table>
                 <thead md-head md-order="query.order">
@@ -45,16 +53,137 @@
                   </tr>
                 </tbody>
               </table>
+              <h3 style="color:red;">Your tokens table goes here (on click shows dialog with send,pause,resume, and
+                other options)</h3>
             </md-table-container>
           </md-tab>
           <md-tab label="QSLP Transactions">
-            <p>All QSLP Transactions on this address (limit 50)</p>
+            <md-table-container flex="100">
+              <table md-table>
+                <thead md-head md-order="query.order">
+                  <tr md-row>
+                    <th md-column md-order-by="qslp.date">
+                      <translate>Date</translate>
+                    </th>
+                    <th md-column md-order-by="qslp.token">
+                      <translate>Token</translate>
+                    </th>
+                    <th md-column md-order-by="qslp.tokenid">
+                      <translate>Token ID</translate>
+                    </th>
+                    <th md-column md-order-by="qslp.tokenamount">
+                      <translate>Amount</translate>
+                    </th>
+                    <th md-column md-order-by="qslp.from">
+                      <translate>From</translate>
+                    </th>
+                    <th md-column md-order-by="qslp.to">
+                      <translate>To</translate>
+                    </th>
+                    <th md-column>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row>
+                    <td md-cell>6/24/21 4:45 PM</td>
+                    <td md-cell>QSLP1</td>
+                    <td md-cell>8b5797626629ecddb1b5e7a93851f22e</td>
+                    <td md-cell>500.12345678</td>
+                    <td md-cell>XQRJg…P6hnh</td>
+                    <td md-cell>XDFF6…dhFPZ</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
           </md-tab>
           <md-tab label="Create Tokens">
-            <p>page with token creation template</p>
+            <h4 style="text-align: center;">Use this form to create your own QSLP-1 tokens.</h4>
+            <p style="text-align: center;">Please note that a GENESIS transaction costs "' amount ' + network.symbol "
+              plus the network fees.</p>
+            <p style="text-align: center;">The
+              tokens
+              will be automatically deposited to your wallet after 51 confirmations.</p>
+            <md-form-container style="text-align: center;" flex="100">
+              <form class="md-inline-form">
+                <div layout="row" layout-wrap>
+                  <md-input-container>
+                    <label>Symbol (max 7)</label>
+                    <input type="text" ng-model="qslp1.symbol">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Token Name (max ?)</label>
+                    <input type="text" ng-model="qslp1.tokenname">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Quantity</label>
+                    <input type="text" ng-model="qslp1.quantity">
+                  </md-input-container>
+                </div>
+
+                <div layout="row" layout-wrap>
+                  <md-input-container>
+                    <label>Decimals (max 8)</label>
+                    <input type="text" ng-model="qslp1.decimals">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>URI</label>
+                    <input type="text" ng-model="qslp1.uri">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Notes</label>
+                    <input type="text" ng-model="qslp1.notes">
+                  </md-input-container>
+                </div>
+                <div layout="row" layout-wrap>
+                </div>
+                <div layout="row" layout-wrap>
+                  <md-switch ng-model="qslp1.pausable" aria-label="pausable">
+                    Pausable
+                  </md-switch>
+                  <md-switch ng-model="qslp1.mintable" aria-label="mintable">
+                    Mintable
+                  </md-switch>
+                </div>
+                <md-container>
+                  <md-button class="md-raised md-primary">Create</md-button>
+                </md-container>
+              </form>
+            </md-form-container>
           </md-tab>
         </md-tabs>
       </md-content>
     </div>
   </md-tab-body>
 </md-tab>
+
+<!--
+
+  <script>
+    angular.module('inputInlineForm', ['ngMaterial', 'ngMessages'])
+    .controller('DemoCtrl', function ($scope) {
+    $scope.user = {
+    title: 'Developer',
+    email: 'ipsum@lorem.com',
+    firstName: '',
+    lastName: '',
+    company: 'Google',
+    address: '1600 Amphitheatre Pkwy',
+    city: 'Mountain View',
+    state: null,
+    stateOfBirth: 'CA',
+    description: 'Loves TypeScript 💖',
+    postalCode: '94043',
+    licenseAccepted: true,
+    submissionDate: null,
+    marketingOptIn: true
+    };
+  </script>
+  <style>
+    .inputdemoInlineForm .demo-inline-form-container {
+    padding: 16px; }
+    .inputdemoInlineForm .demo-inline-form-container .demo-radio-button-label {
+    margin: 18px 16px;
+    padding-top: 6px; }
+  </style>
+-->
