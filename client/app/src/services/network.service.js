@@ -62,12 +62,12 @@
         deferred.reject("Network name '" + data.name + "' already taken, please choose another one")
       } else {
         $http({
-          url: data.peerseed + '//api/loader/autoconfigure',
+          url: data.peerseed + '/api/node/configuration',
           method: 'GET',
           timeout: 5000
         }).then(
           (resp) => {
-            const newNetwork = resp.data.network
+            const newNetwork = resp.data
             newNetwork.isUnsaved = true
             newNetwork.forcepeer = data.forcepeer
             newNetwork.peerseed = data.peerseed
