@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular
@@ -14,7 +14,7 @@
       ]
     })
 
-  function DashboardController ($scope, $mdToast, toastService, gettext, feedService, storageService) {
+  function DashboardController($scope, $mdToast, toastService, gettext, feedService, storageService) {
     this.$onInit = () => {
       setTimeout(() => this.showAnnouncements(), 1000)
     }

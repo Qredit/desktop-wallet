@@ -23,7 +23,7 @@
        * Fetches and parses the RSS of ARK.io
        */
       fetchBlogEntries() {
-        const rssUrl = 'https://ark.io/blog'
+        const rssUrl = 'https://cointelegraph.com/rss'
         return this.fetchAndParse(rssUrl).then(parsed => parsed.feed.entries)
       }
     }

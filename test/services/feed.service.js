@@ -15,7 +15,7 @@ describe('feedService', () => {
     it('fetches and parses the ARK.io feed URL', () => {
       const stub = sinon.stub(feedService, 'fetchAndParse').resolves('OK')
       feedService.fetchBlogEntries()
-      expect(stub.firstCall.args[0]).to.eql('https://ark.io/blog')
+      expect(stub.firstCall.args[0]).to.eql('https://cointelegraph.com/rss')
     })
   })
 })
