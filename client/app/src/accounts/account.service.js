@@ -89,10 +89,11 @@
       networkService.getFromPeer('/api/wallets/' + address).then(
         (resp) => {
           if (resp.data) {
-            const account = resp.data.address
-            account.cold = !account.publicKey
+            const account = resp.data
+            account.cold = !resp.data.publicKey
             account.delegates = []
             account.selectedVotes = []
+            account.balance = resp.data.balance;
             deferred.resolve(account)
             addWatchOnlyAddress(account)
           } else {
@@ -115,12 +116,12 @@
           if (resp.data) {
             let account = storageService.get(address)
             if (!account) {
-              account = resp.account
+              account = resp.data
             } else {
-              account.balance = resp.account.balance
-              account.secondSignature = resp.account.secondSignature
+              account.balance = resp.data.balance
+              account.secondSignature = resp.data.secondSignature
             }
-            account.cold = !resp.account.publicKey
+            account.cold = !resp.data.publicKey
             deferred.resolve(account)
           } else {
             let account = storageService.get(address)
@@ -205,7 +206,7 @@
     function getTransactionLabel(transaction, recipientAddress = null) {
       let label = gettextCatalog.getString(self.TxTypes[transaction.type], { currency: networkService.getNetwork().token })
 
-      if (recipientAddress && transaction.recipientId === recipientAddress && transaction.type === 0) {
+      if (recipientAddress && transaction.recipient === recipientAddress && transaction.type === 0) {
         label = gettextCatalog.getString('Receive {{ currency }}', { currency: networkService.getNetwork().token })
       }
 
@@ -213,15 +214,17 @@
     }
 
     function formatTransaction(transaction, recipientAddress) {
+      transaction.senderId = transaction.sender;
+      transaction.recipientId = transaction.recipient;
       transaction.label = getTransactionLabel(transaction, recipientAddress)
-      transaction.date = utilityService.arkStampToDate(transaction.timestamp)
-      if (transaction.recipientId === recipientAddress) {
+      transaction.date = new Date(transaction.timestamp.unix * 1000); //utilityService.arkStampToDate(transaction.timestamp)
+      if (transaction.recipient === recipientAddress) {
         transaction.total = transaction.amount
         // if (transaction.type == 0) {
         //   transaction.label = gettextCatalog.getString("Receive Ark")
         // }
       }
-      if (transaction.senderId === recipientAddress) {
+      if (transaction.sender === recipientAddress) {
         transaction.total = -transaction.amount - transaction.fee
       }
       // to avoid small transaction to be displayed as 1e-8
@@ -237,11 +240,19 @@
         return deferred.promise
       }
 
-      networkService.getFromPeer('/api/blocks/getFees')
+      networkService.getFromPeer('/api/node/configuration')
         .then((resp) => {
           if (resp.data) {
-            self.cachedFees = resp.fees
-            deferred.resolve(resp.fees)
+          
+            thisfees = resp.data.constants.staticFees.fees;
+            thisfees.send = resp.data.constants.staticFees.fees.transfer;
+            thisfees.secondsignature = resp.data.constants.staticFees.fees.secondSignature;
+            thisfees.delegate = resp.data.constants.staticFees.fees.delegateRegistration;
+            thisfees.multisignature = resp.data.constants.staticFees.fees.multiSignature;
+
+            self.cachedFees = thisfees
+            deferred.resolve(thisfees)
+            
           } else {
             deferred.resolve(self.defaultFees)
           }
@@ -261,15 +272,24 @@
       if (!store) {
         store = true
       }
+            
       const deferred = $q.defer()
       networkService.getFromPeer('/api/wallets/' + address + '/transactions?' + 'page=' + offset + '&limit=' + limit).then((resp) => {
+ 
         if (resp.data) {
-          for (let i = 0; i < resp.data(0).amount; i++) {
-            formatTransaction(resp.data(0)[i], recipient)
-          }
-          if (store) storageService.set('transactions-' + address, resp.transactions)
 
-          deferred.resolve(resp.transactions)
+          var txlist = [];
+
+          for (let i = 0; i < resp.data.length; i++) {
+            txlist[i] = formatTransaction(resp.data[i], address);
+          }
+
+          //if (store) storageService.set('transactions-' + address, resp.transactions)
+          if (store) storageService.set('transactions-' + address, txlist)
+
+          //deferred.resolve(resp.transactions)
+          deferred.resolve(txlist)
+
         } else {
           deferred.reject(gettextCatalog.getString('Cannot get transactions'))
         }
@@ -380,7 +400,7 @@
         deferred.reject(gettextCatalog.getString('No publicKey'))
         return deferred.promise
       }
-      networkService.getFromPeer('/api/delegates/get/?publicKey=' + publicKey).then((resp) => {
+      networkService.getFromPeer('/api/delegates/' + publicKey).then((resp) => {
         if (resp && resp.success && resp.delegate) {
           storageService.set('delegate-' + resp.delegate.address, resp.delegate)
           storageService.set('username-' + resp.delegate.address, resp.delegate.username)
@@ -446,11 +466,11 @@
 
     function getVotedDelegates(address) {
       const deferred = $q.defer()
-      networkService.getFromPeer('//' + address).then((resp) => {
+      networkService.getFromPeer('/api/wallets/' + address).then((resp) => {
         if (resp && resp.data) {
           let delegates = []
-          if (resp.data && resp.data.length && resp.data[0]) {
-            delegates = resp.delegates
+          if (resp.data && resp.data.vote && resp.data.vote != "") {
+            delegates = resp.data.vote;
           }
           storageService.set('voted-' + address, delegates)
           deferred.resolve(delegates)

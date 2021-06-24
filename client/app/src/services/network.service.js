@@ -172,18 +172,18 @@
     }
 
     function listenNetworkHeight() {
-      $http.get(peer.ip + '/api/blockchain', { timeout: 5000 }).then(resp => {
+      $http.get(peer.ip + '/api/blockchain', { timeout: 5000 }).then((resp) => {
         timeService.getTimestamp().then(
           (timestamp) => {
             peer.lastConnection = timestamp
             if (resp.data) {
-              if (resp.data) {
+              if (!resp.data.data) {
                 peer.isConnected = false
                 peer.error = 'Node is experiencing sychronisation issues'
                 connection.notify(peer)
                 pickRandomPeer()
               } else {
-                peer.height = resp.data.block.height
+                peer.height = resp.data.data.block.height
                 peer.isConnected = true
                 connection.notify(peer)
               }
@@ -202,7 +202,7 @@
       const deferred = $q.defer()
       peer.lastConnection = new Date()
       $http({
-        url: peer.ip + '/api/peers',
+        url: peer.ip + api, //'/api/peers',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
