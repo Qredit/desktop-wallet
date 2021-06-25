@@ -13,6 +13,8 @@ const ledger = require('ledgerco')
 const LedgerArk = require(_path.resolve(__dirname, './LedgerArk'))
 const fork = require('child_process').fork
 
+const { Transactions: QreditTransactions, Managers: QreditManagers, Utils: QreditUtils } = require('@qredit/crypto'); 
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -25,6 +27,7 @@ let enableScreenshotProtection = true
 let template = null
 let deeplinkingUrl = null
 
+/*
 // Force Single Instance Application
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
   // Someone tried to run a second instance, we should focus our window.
@@ -40,10 +43,36 @@ const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
     mainWindow.focus()
   }
 })
+*/
 
-if (shouldQuit) {
-  app.exit()
+// Force Single Instance Application
+const shouldQuit = app.requestSingleInstanceLock()
+ 
+if (!shouldQuit) {
+  app.quit()
+} else {
+
+  app.on('second-instance', (event, argv, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+
+    // argv: An array of the second instance’s (command line / deep linked) arguments
+    if (process.platform !== 'darwin') {
+      deeplinkingUrl = argv[2]
+      broadcastURI(deeplinkingUrl)
+    }
+
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+
 }
+
+
+//if (shouldQuit) {
+//  app.exit()
+//}
 
 function createWindow() {
   // Create the browser window.t
