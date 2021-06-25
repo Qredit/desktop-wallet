@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
@@ -8,8 +8,8 @@
    * TimeService
    * @constructor
    */
-  function TimeService ($q, $http) {
-    const { getNetworkTime } = require('@destinationstransfers/ntp')
+  function TimeService($q, $http) {
+    //doto    const { getNetworkTime } = require('@destinationstransfers/ntp')
 
     const config = {
       servers: [
@@ -27,7 +27,7 @@
      * Fallback to users local clock on failure.
      * Always returns success.
      */
-    function getTimestamp () {
+    function getTimestamp() {
       return new Promise((resolve, reject) => {
         const startTime = new Date().getTime()
 

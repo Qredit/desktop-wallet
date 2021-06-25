@@ -25,23 +25,23 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser (the order matters)
     files: [
-      '../client/node_modules/angular/angular.js',
-      '../client/node_modules/angular-gettext/dist/angular-gettext.js',
-      '../client/node_modules/angular-animate/angular-animate.js',
-      '../client/node_modules/angular-aria/angular-aria.js',
-      '../client/node_modules/angular-material/angular-material.js',
+      '../node_modules/angular/angular.js',
+      '../node_modules/angular-gettext/dist/angular-gettext.js',
+      '../node_modules/angular-animate/angular-animate.js',
+      '../node_modules/angular-aria/angular-aria.js',
+      '../node_modules/angular-material/angular-material.js',
 
       // Subjects under test
-      '../client/app/src/init.js',
-      '../client/app/src/constants/constants.js',
-      '../client/app/src/accounts/account.service.js',
-      '../client/app/src/accounts/transaction-builder.service.js',
-      '../client/app/src/accounts/account.controller.js',
-      '../client/app/src/addons/pluginLoader.addon.js',
-      '../client/app/src/components/**/*.js',
-      '../client/app/src/filters/filters.js',
-      '../client/app/src/services/**/*.js',
-      '../client/app/src/utils/translations.js',
+      '../app/src/init.js',
+      '../app/src/constants/constants.js',
+      '../app/src/accounts/account.service.js',
+      '../app/src/accounts/transaction-builder.service.js',
+      '../app/src/accounts/account.controller.js',
+      '../app/src/addons/pluginLoader.addon.js',
+      '../app/src/components/**/*.js',
+      '../app/src/filters/filters.js',
+      '../app/src/services/**/*.js',
+      '../app/src/utils/translations.js',
 
       // Inject the `module` function
       '../node_modules/angular-mocks/angular-mocks.js',
@@ -69,8 +69,8 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
 
     preprocessors: {
-      '../client/app/**/*.js': ['electron'],
-      '../client/app/src/**/*.js': ['electron', 'babelSourceMap', 'coverage'],
+      '../app/**/*.js': ['electron'],
+      '../app/src/**/*.js': ['electron', 'babelSourceMap', 'coverage'],
       './**/*.js': ['electron', 'babelSourceMap']
     },
 
@@ -96,7 +96,7 @@ module.exports = function (config) {
       useIframe: false,
       // note: if we use path.join here, the tests somehow fail on windows!
       // eslint-disable-next-line no-path-concat
-      __filenameOverride: __dirname + '/../client/app/index.html'
+      __filenameOverride: __dirname + '/../app/index.html'
     },
 
     customLaunchers: {

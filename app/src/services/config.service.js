@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
   'use strict'
 
   angular.module('arkclient.services')
@@ -8,8 +8,8 @@
    * ConfigService
    * @constructor
    */
-  function ConfigService () {
-    this.config = require(require('path').resolve(__dirname, './config/config.js'))
+  function ConfigService() {
+    //doto   this.config = require(require('path').resolve(__dirname, './config/config.js'))
 
     const getByGroup = group => {
       if (this.config[group]) {

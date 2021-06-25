@@ -1,8 +1,13 @@
 'use strict'
 
+const path = './config/appearance';
+
+const appearanceConfig = path
+
+//doto this.config = require('./config.js')
 
 
-const appearanceConfig = require(require('path').resolve(__dirname, './config/appearance'))
+
 const modules = [
   'ngMaterial',
   'md.data.table',
@@ -27,29 +32,36 @@ app.config(($mdIconProvider) => {
     .icon('bitcoin_toggle', './assets/svg/bitcoin_toggle.svg', 24)
 })
 
-app.config(($provide, $mdThemingProvider) => {
-  const themes = appearanceConfig.themes
-  const themeNames = Object.keys(themes)
+//app.config(($provide, $mdThemingProvider) => {
+//  const themes = appearanceConfig.themes
+//const themeNames = Object.keys(themes)
 
-  themeNames.forEach((key) => {
-    const theme = $mdThemingProvider.theme(key)
-      .primaryPalette(themes[key].primary)
-      .accentPalette(themes[key].accent)
-      .warnPalette(themes[key].warn)
 
-    if (themes[key].background) theme.backgroundPalette(themes[key].background)
-  })
+//Object.keys({ 'key': 'value' })
 
-  $mdThemingProvider.alwaysWatchTheme(true)
+//themeNames.forEach((key) => {
+//  const theme = $mdThemingProvider.theme(key)
+//    .primaryPalette(themes[key].primary)
+//    .accentPalette(themes[key].accent)
+//    .warnPalette(themes[key].warn)
 
-  $provide.value('$mdThemingProvider', $mdThemingProvider)
-})
+//  if (themes[key].background) theme.backgroundPalette(themes[key].background)
+//})
 
-app.config(['$qProvider', function ($qProvider) {
-  $qProvider.errorOnUnhandledRejections(false)
-}])
+//$mdThemingProvider.alwaysWatchTheme(true)
+
+//$provide.value('$mdThemingProvider', $mdThemingProvider)
+//})
+
+//app.config(['$qProvider', function ($qProvider) {
+//  $qProvider.errorOnUnhandledRejections(false)
+//}])
+
+
 
 const electron = require('electron')
+
+
 const remote = electron.remote
 const Menu = remote.Menu
 

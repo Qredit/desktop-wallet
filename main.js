@@ -1,3 +1,5 @@
+
+
 const electron = require('electron') // {app, electron, protocol, BrowserWindow, ipcMain, Menu, globalShortcut}
 const elemon = require('elemon')
 const openAboutWindow = require('about-window').default
@@ -9,11 +11,15 @@ const BrowserWindow = electron.BrowserWindow
 const ipcMain = electron.ipcMain
 const Menu = electron.Menu
 
-const ledger = require('ledgerco')
+const ledger = require('@vaporyjs/ledgerco')
 const LedgerArk = require(_path.resolve(__dirname, './LedgerArk'))
+
 const fork = require('child_process').fork
 
-const { Transactions: QreditTransactions, Managers: QreditManagers, Utils: QreditUtils } = require('@qredit/crypto'); 
+const { getNetworkTime } = require('@destinationstransfers/ntp')
+const { Transactions: QreditTransactions, Managers: QreditManagers, Utils: QreditUtils } = require('@qredit/crypto');
+const fs = require('fs')
+const q = require('q')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -47,7 +53,7 @@ const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
 
 // Force Single Instance Application
 const shouldQuit = app.requestSingleInstanceLock()
- 
+
 if (!shouldQuit) {
   app.quit()
 } else {
@@ -76,7 +82,7 @@ if (!shouldQuit) {
 
 function createWindow() {
   // Create the browser window.t
-  const iconpath = _path.resolve(__dirname, '/client/ark.png')
+  const iconpath = _path.resolve(__dirname, '/ark.png')
   let { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
 
   let mainWindowState = windowStateKeeper({
@@ -88,7 +94,7 @@ function createWindow() {
   mainWindow.setContentProtection(true)
   mainWindowState.manage(mainWindow)
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/client/app/index.html`)
+  mainWindow.loadURL(`file://${__dirname}/app/index.html`)
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
   })
@@ -172,7 +178,7 @@ function createWindow() {
   const about = {
     role: 'about',
     click: () => openAboutWindow({
-      icon_path: `${__dirname}/client/ark.png`,
+      icon_path: `${__dirname}/ark.png`,
       package_json_dir: __dirname,
       copyright: 'Copyright (c) 2017 ARK',
       homepage: 'https://ark.io/',
@@ -362,3 +368,10 @@ function broadcastURI(uri) {
 
   if (mainWindow && mainWindow.webContents) mainWindow.webContents.send('uri', uri)
 }
+
+
+//app.whenReady(() => {
+//  app.allowRendererProcessReuse = true
+//})
+
+// https://github.com/electron/electron/issues/22119 Renderer Node fs API stops working on page reload when allowRendererProcessReuse is true

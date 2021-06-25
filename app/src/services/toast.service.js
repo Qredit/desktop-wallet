@@ -1,7 +1,6 @@
-;(function () {
+; (function () {
   'use strict'
 
-  const fs = require('fs')
 
   angular.module('arkclient.services')
     .service('toastService', ['configService', '$mdToast', 'gettextCatalog', ToastService])
@@ -10,7 +9,7 @@
    * ToastService
    * @constructor
    */
-  function ToastService (configService, $mdToast, gettextCatalog) {
+  function ToastService(configService, $mdToast, gettextCatalog, fs) {
     const self = this
 
     self.TypeEnum = {
@@ -34,23 +33,23 @@
     self.hideDelay = configService.getByGroupAndKey('notice', 'defaultHideDelay')
     self.fileStream = null
 
-    function error (message, hideDelay, stopTranslate) {
+    function error(message, hideDelay, stopTranslate) {
       self.show(message, self.TypeEnum.ERROR, hideDelay, stopTranslate)
     }
 
-    function success (message, hideDelay, stopTranslate) {
+    function success(message, hideDelay, stopTranslate) {
       self.show(message, self.TypeEnum.SUCCESS, hideDelay, stopTranslate)
     }
 
-    function warn (message, hideDelay, stopTranslate) {
+    function warn(message, hideDelay, stopTranslate) {
       self.show(message, self.TypeEnum.WARN, hideDelay, stopTranslate)
     }
 
-    function log (message, hideDelay, stopTranslate) {
+    function log(message, hideDelay, stopTranslate) {
       self.show(message, self.TypeEnum.LOG, hideDelay, stopTranslate)
     }
 
-    function debug (message, hideDelay, stopTranslate) {
+    function debug(message, hideDelay, stopTranslate) {
       self.show(message, self.TypeEnum.DEBUG, hideDelay, stopTranslate)
     }
 
@@ -80,7 +79,7 @@
       if (!self.logFile) {
         return
       }
-      self.fileStream = self.fileStream || fs.createWriteStream('logs/ark.log', {flags: 'a+'})
+      self.fileStream = self.fileStream || fs.createWriteStream('logs/ark.log', { flags: 'a+' })
       if (!self.fileStream) {
         return
       }

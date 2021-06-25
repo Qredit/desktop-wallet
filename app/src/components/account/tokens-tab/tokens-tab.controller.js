@@ -1,10 +1,7 @@
 ; (function () {
   'use strict'
 
-  const qae = require('nodeQreditApi')
-  const qaeApi = require('nodeQreditApi')
-  const axios = require('axios')
-  const moment = require('moment')
+
 
   angular
     .module('arkclient.components')
