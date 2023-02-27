@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should handle click 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="Cardstyles__CardButton-sc-ajtauu-0 dZiOWL"
+      data-testid="Card"
+      type="button"
+    >
+      Test
+      <div
+        class="flex absolute -top-1 -right-1 items-center m-4 space-x-1"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card should render 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="Cardstyles__CardButton-sc-ajtauu-0 gawQiQ"
+      data-testid="Card"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="flex absolute -top-1 -right-1 items-center m-4 space-x-1"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card should selected 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="Cardstyles__CardButton-sc-ajtauu-0 gCeoSb"
+      data-testid="Card"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="flex absolute -top-1 -right-1 items-center m-4 space-x-1"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

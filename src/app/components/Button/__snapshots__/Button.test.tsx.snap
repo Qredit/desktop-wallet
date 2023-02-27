@@ -1,0 +1,297 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button should render 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render a large one 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 IxKut"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render a small one 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 PiCVm"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render an icon 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 kpwlHa"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as danger button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 fxPCrX"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as info button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 cPuYtZ"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as primary button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as reverse button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 IWDiW"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as secondary button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 cxgwmk"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as transparent button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 hiDmbe"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render as warning button 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 iccqMs"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button should render if disabled 1`] = `
+<DocumentFragment>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 kkDhXe"
+    data-testid="Button"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      Click
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button should render loading with icon 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 kpwlHa"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      <div
+        class="flex items-center"
+      >
+        <span
+          class="flex items-center invisible space-x-2"
+        >
+          <div
+            class="sc-bdvvtL fCrhkg"
+            height="16"
+            width="16"
+          />
+        </span>
+        <div
+          class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+        >
+          <div
+            class="ButtonSpinner-sc-1jf6tdt-0 fxQVkP"
+          />
+        </div>
+      </div>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`Button should render with icon and custom icon size 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      <div
+        class="sc-bdvvtL qGXhc"
+        height="20"
+        width="20"
+      >
+        <svg>
+          plus.svg
+        </svg>
+      </div>
+      Click Me
+    </div>
+  </button>
+</div>
+`;
+
+exports[`Button should render with icon on the left side 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      <div
+        class="sc-bdvvtL fCrhkg"
+        height="16"
+        width="16"
+      >
+        <svg>
+          plus.svg
+        </svg>
+      </div>
+      Click Me
+    </div>
+  </button>
+</div>
+`;
+
+exports[`Button should render with icon on the right side 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      Click Me
+      <div
+        class="sc-bdvvtL fCrhkg"
+        height="16"
+        width="16"
+      >
+        <svg>
+          plus.svg
+        </svg>
+      </div>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`Button should render with loading state enabled 1`] = `
+<div>
+  <button
+    class="OriginalButton__StyledButton-sc-o0fs2j-0 isLyLB"
+    type="button"
+  >
+    <div
+      class="flex items-center space-x-2"
+    >
+      <div
+        class="flex items-center"
+      >
+        <span
+          class="flex items-center invisible space-x-2"
+        >
+          Click Me
+        </span>
+        <div
+          class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+        >
+          <div
+            class="ButtonSpinner-sc-1jf6tdt-0 fxQVkP"
+          />
+        </div>
+      </div>
+    </div>
+  </button>
+</div>
+`;

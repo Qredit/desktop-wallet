@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ControlButton should render 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 ckIXFQ ring-focus"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ControlButton should render active 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 ckIXFQ ring-focus"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ControlButton should render disabled 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 dVIwyh ring-focus"
+      disabled=""
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ControlButton should render with dot 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 ckIXFQ ring-focus"
+    >
+      <div
+        class="flex absolute top-0.5 right-1 justify-center items-center w-3 h-3 rounded-full transition-all duration-100 ease-linear bg-theme-background"
+      >
+        <div
+          class="w-2 h-2 rounded-full bg-theme-primary-500"
+        />
+      </div>
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ControlButton should render without border 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 enxoho ring-focus"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ControlButton should render without border and with dot 1`] = `
+<DocumentFragment>
+  <div
+    class="group"
+  >
+    <button
+      class="ControlButton__ControlButtonStyled-sc-1l8cuc8-0 enxoho ring-focus"
+    >
+      <div
+        class="flex absolute top-0.5 right-1 justify-center items-center w-3 h-3 rounded-full transition-all duration-100 ease-linear bg-theme-background -mr-2.5"
+      >
+        <div
+          class="w-2 h-2 rounded-full bg-theme-primary-500"
+        />
+      </div>
+    </button>
+  </div>
+</DocumentFragment>
+`;

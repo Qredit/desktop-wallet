@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableRow should render with border 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr
+        class="TableRow__TableRowStyled-sc-y9j4av-0 jRikRC"
+        data-testid="TableRow"
+      />
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`TableRow should render with onClick callback 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr
+        class="TableRow__TableRowStyled-sc-y9j4av-0 ijbCHm group"
+        data-testid="TableRow"
+      />
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`TableRow should render without border 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr
+        class="TableRow__TableRowStyled-sc-y9j4av-0 fXMgbp"
+        data-testid="TableRow"
+      />
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`TableRow should render without onClick callback 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr
+        class="TableRow__TableRowStyled-sc-y9j4av-0 jRikRC"
+        data-testid="TableRow"
+      />
+    </tbody>
+  </table>
+</div>
+`;

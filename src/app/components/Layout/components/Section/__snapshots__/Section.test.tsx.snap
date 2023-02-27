@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Section should render 1`] = `
+<DocumentFragment>
+  <div
+    class="Section__SectionWrapper-sc-plnv9l-0 fYoPaw"
+  >
+    <div
+      class="container px-10 mx-auto"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Section should render with border 1`] = `
+<DocumentFragment>
+  <div
+    class="Section__SectionWrapper-sc-plnv9l-0 gIRSYc border-theme-secondary-300 dark:border-theme-secondary-800 hasBorder"
+  >
+    <div
+      class="container px-10 mx-auto"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Section should render with custom background class name 1`] = `
+<DocumentFragment>
+  <div
+    class="Section__SectionWrapper-sc-plnv9l-0 kpvOic bg-theme-secondary-background"
+  >
+    <div
+      class="container px-10 mx-auto"
+    />
+  </div>
+</DocumentFragment>
+`;

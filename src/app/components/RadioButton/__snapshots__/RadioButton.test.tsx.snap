@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioButton should render 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 iKItjH"
+    color="success"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`RadioButton should render a danger color 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 iojUrl"
+    color="danger"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`RadioButton should render a hint color 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 coOXxc"
+    color="hint"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`RadioButton should render a info color 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 jKdioY"
+    color="info"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`RadioButton should render a success color 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 iKItjH"
+    color="success"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`RadioButton should render a warning color 1`] = `
+<div>
+  <input
+    class="RadioButton-sc-jdab1i-0 fyLuLi"
+    color="warning"
+    type="radio"
+  />
+</div>
+`;

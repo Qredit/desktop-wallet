@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toggle should render 1`] = `
+<DocumentFragment>
+  <label
+    class="Toggle__Wrapper-sc-6s3wfu-0 efNWJo"
+  >
+    <input
+      class="Toggle__Input-sc-6s3wfu-1 WwplI"
+      type="checkbox"
+    />
+    <div
+      class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+    >
+      <span
+        class="Toggle__HandleInner-sc-6s3wfu-3 ddepvC"
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`Toggle should render always on 1`] = `
+<DocumentFragment>
+  <label
+    class="Toggle__Wrapper-sc-6s3wfu-0 efNWJo"
+  >
+    <input
+      class="Toggle__Input-sc-6s3wfu-1 WwplI"
+      type="checkbox"
+    />
+    <div
+      class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+    >
+      <span
+        class="Toggle__HandleInner-sc-6s3wfu-3 cIyTyk"
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`Toggle should render disabled 1`] = `
+<DocumentFragment>
+  <label
+    class="Toggle__Wrapper-sc-6s3wfu-0 kdYGGX"
+    disabled=""
+  >
+    <input
+      class="Toggle__Input-sc-6s3wfu-1 WwplI"
+      disabled=""
+      type="checkbox"
+    />
+    <div
+      class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+    >
+      <span
+        class="Toggle__HandleInner-sc-6s3wfu-3 kaYzOJ"
+        disabled=""
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`Toggle should render small 1`] = `
+<DocumentFragment>
+  <label
+    class="Toggle__Wrapper-sc-6s3wfu-0 iggSjt"
+  >
+    <input
+      class="Toggle__Input-sc-6s3wfu-1 WwplI"
+      type="checkbox"
+    />
+    <div
+      class="Toggle__Handle-sc-6s3wfu-2 jRjdQR"
+    >
+      <span
+        class="Toggle__HandleInner-sc-6s3wfu-3 enZLFu"
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`Toggle should toggle checked 1`] = `
+<DocumentFragment>
+  <label
+    class="Toggle__Wrapper-sc-6s3wfu-0 efNWJo"
+  >
+    <input
+      class="Toggle__Input-sc-6s3wfu-1 WwplI"
+      type="checkbox"
+    />
+    <div
+      class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+    >
+      <span
+        class="Toggle__HandleInner-sc-6s3wfu-3 ddepvC"
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;

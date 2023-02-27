@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Switch should render 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center"
+  >
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 bWARAL"
+      role="button"
+    >
+      Option A
+    </span>
+    <label
+      class="Toggle__Wrapper-sc-6s3wfu-0 efNWJo"
+    >
+      <input
+        class="Toggle__Input-sc-6s3wfu-1 WwplI"
+        type="checkbox"
+      />
+      <div
+        class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+      >
+        <span
+          class="Toggle__HandleInner-sc-6s3wfu-3 cIyTyk"
+        />
+      </div>
+    </label>
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 koumea"
+      role="button"
+    >
+      Option B
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Switch should render disabled 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center"
+  >
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 itUjhb"
+      disabled=""
+      role="button"
+    >
+      Option A
+    </span>
+    <label
+      class="Toggle__Wrapper-sc-6s3wfu-0 kdYGGX"
+      disabled=""
+    >
+      <input
+        class="Toggle__Input-sc-6s3wfu-1 WwplI"
+        disabled=""
+        type="checkbox"
+      />
+      <div
+        class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+      >
+        <span
+          class="Toggle__HandleInner-sc-6s3wfu-3 kaYzOJ"
+          disabled=""
+        />
+      </div>
+    </label>
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 geljMO"
+      disabled=""
+      role="button"
+    >
+      Option B
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Switch should render large labels 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center"
+  >
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 etXEJw"
+      role="button"
+    >
+      Option A
+    </span>
+    <label
+      class="Toggle__Wrapper-sc-6s3wfu-0 efNWJo"
+    >
+      <input
+        class="Toggle__Input-sc-6s3wfu-1 WwplI"
+        type="checkbox"
+      />
+      <div
+        class="Toggle__Handle-sc-6s3wfu-2 cobHFC"
+      >
+        <span
+          class="Toggle__HandleInner-sc-6s3wfu-3 cIyTyk"
+        />
+      </div>
+    </label>
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 iWSMtd"
+      role="button"
+    >
+      Option B
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Switch should render small labels 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center"
+  >
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 aJKSk"
+      role="button"
+    >
+      Option A
+    </span>
+    <label
+      class="Toggle__Wrapper-sc-6s3wfu-0 iggSjt"
+    >
+      <input
+        class="Toggle__Input-sc-6s3wfu-1 WwplI"
+        type="checkbox"
+      />
+      <div
+        class="Toggle__Handle-sc-6s3wfu-2 jRjdQR"
+      >
+        <span
+          class="Toggle__HandleInner-sc-6s3wfu-3 fiPeMI"
+        />
+      </div>
+    </label>
+    <span
+      class="Switch__SwitchText-sc-161iiro-0 jeOrUV"
+      role="button"
+    >
+      Option B
+    </span>
+  </div>
+</DocumentFragment>
+`;

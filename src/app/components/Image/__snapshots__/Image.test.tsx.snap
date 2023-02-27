@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image should render 1`] = `
+<DocumentFragment>
+  <svg>
+    welcome-banner-dark-green.svg
+  </svg>
+</DocumentFragment>
+`;
+
+exports[`Image should render nothing if image can't be found 1`] = `<DocumentFragment />`;
+
+exports[`Image should render with domain 1`] = `
+<DocumentFragment>
+  <svg>
+    generic-error-dark-green.svg
+  </svg>
+</DocumentFragment>
+`;
+
+exports[`Image should render with string 1`] = `
+<DocumentFragment>
+  <img
+    alt=""
+    src="welcome-modal-step-1-banner-dark-green.png"
+  />
+</DocumentFragment>
+`;

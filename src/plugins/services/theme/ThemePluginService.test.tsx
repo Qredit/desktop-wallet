@@ -1,0 +1,52 @@
+import { Contracts } from "@payvo/sdk-profiles";
+import React from "react";
+
+import { ThemePluginService } from "./ThemePluginService";
+import { withThemeDecorator } from "./withThemeDecorator";
+import { PluginController, PluginManager } from "@/plugins/core";
+import { PluginAPI } from "@/plugins/types";
+import { env, render, screen } from "@/utils/testing-library";
+
+const config = { "desktop-wallet": { permissions: ["THEME"] }, name: "test", version: "1.1" };
+
+const fixture = (api: PluginAPI) => {
+	const MyButton = (properties: any) => <span data-testid="plugin-button" {...properties} />;
+	api.theme().decorate("test.button", () => MyButton);
+};
+
+describe("ThemePluginService", () => {
+	let profile: Contracts.IProfile;
+	let manager: PluginManager;
+
+	beforeEach(() => {
+		profile = env.profiles().first();
+
+		manager = new PluginManager();
+
+		manager.services().register([new ThemePluginService()]);
+		manager.services().boot();
+	});
+
+	it("should override components when enabled", () => {
+		const ctrl = new PluginController(config, fixture);
+		ctrl.enable(profile);
+
+		manager.plugins().push(ctrl);
+
+		const Button = (properties: any) => <button data-testid="app-button" {...properties} />;
+		const ThemedButton = withThemeDecorator("test.button", Button, manager);
+
+		const { rerender } = render(<ThemedButton>Hello</ThemedButton>);
+
+		expect(screen.queryByTestId("app-button")).toHaveTextContent("Hello");
+		expect(screen.queryByTestId("plugin-button")).toBeNull();
+
+		// Run plugins
+		manager.plugins().runAllEnabled(profile);
+
+		rerender(<ThemedButton>Hello</ThemedButton>);
+
+		expect(screen.queryByTestId("plugin-button")).toHaveTextContent("Hello");
+		expect(screen.queryByTestId("app-button")).toBeNull();
+	});
+});

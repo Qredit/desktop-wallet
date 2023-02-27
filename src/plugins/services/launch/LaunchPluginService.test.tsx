@@ -1,0 +1,53 @@
+import { Contracts } from "@payvo/sdk-profiles";
+import React from "react";
+
+import { LaunchRender } from "./LaunchPluginComponent";
+import { LaunchPluginService } from "./LaunchPluginService";
+import { IPluginController, PluginController, PluginManager } from "@/plugins/core";
+import { PluginAPI } from "@/plugins/types";
+import { env, render } from "@/utils/testing-library";
+
+const config = {
+	"desktop-wallet": { permissions: ["LAUNCH"], urls: [] },
+	name: "test",
+	version: "1.1",
+};
+const fixture = (api: PluginAPI) => api.launch().render(<h1>My Plugin</h1>);
+
+describe("LaunchPluginService", () => {
+	let profile: Contracts.IProfile;
+	let manager: PluginManager;
+	let ctrl: IPluginController;
+
+	beforeEach(() => {
+		profile = env.profiles().first();
+
+		manager = new PluginManager();
+		manager.services().register([new LaunchPluginService()]);
+		manager.services().boot();
+
+		ctrl = new PluginController(config, fixture);
+		ctrl.enable(profile);
+	});
+
+	it("should render", () => {
+		manager.plugins().push(ctrl);
+		manager.plugins().runAllEnabled(profile);
+
+		const Component = () => <LaunchRender manager={manager} pluginId={ctrl.config().id()} />;
+
+		render(<Component />);
+		// @TODO: proper expectation
+		// expect(screen.getByText("My Plugin"));
+	});
+
+	it("should render fallback", () => {
+		const Component = () => (
+			<LaunchRender manager={manager} pluginId={ctrl.config().id()} fallback={<h1>Not Loaded</h1>} />
+		);
+
+		render(<Component />);
+		// @TODO: proper expectation
+		// expect(screen.getByText("Not Loaded"));
+	});
+});

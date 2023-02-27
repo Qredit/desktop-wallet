@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackButton should not redirect to given url when disabled 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 iaWPTU"
+    disabled=""
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BackButton should not redirect to previous page when disabled 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 iaWPTU"
+    disabled=""
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BackButton should redirect to given url 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 gAKHms"
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BackButton should redirect to previous page 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 gAKHms"
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BackButton should render 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 gAKHms"
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BackButton should render when disabled 1`] = `
+<div>
+  <button
+    class="BackButton__StyledBackButton-sc-18ta3r7-0 iaWPTU"
+    disabled=""
+  >
+    <div
+      class="sc-bdvvtL Cfvxc mx-auto"
+      height="10"
+      width="10"
+    >
+      <svg>
+        chevron-left-small.svg
+      </svg>
+    </div>
+  </button>
+</div>
+`;

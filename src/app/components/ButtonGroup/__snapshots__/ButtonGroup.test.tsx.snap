@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonGroup should render 1`] = `
+<DocumentFragment>
+  <div
+    class="inline-flex items-center space-x-3 w-full"
+    data-testid="ButtonGroup"
+    role="radiogroup"
+  />
+</DocumentFragment>
+`;
+
+exports[`ButtonGroupOption should render 1`] = `
+<DocumentFragment>
+  <button
+    aria-checked="true"
+    aria-label="1"
+    class="ButtonGroup__ButtonGroupOptionStyled-sc-2f0qmd-0 ZQFGq"
+    data-testid="ButtonGroupOption"
+    role="radio"
+    type="button"
+  >
+    Test 1
+  </button>
+  <button
+    aria-checked="false"
+    aria-label="2"
+    class="ButtonGroup__ButtonGroupOptionStyled-sc-2f0qmd-0 ZQFGq"
+    data-testid="ButtonGroupOption"
+    role="radio"
+    type="button"
+  >
+    Test 2
+  </button>
+</DocumentFragment>
+`;
+
+exports[`ButtonGroupOption should render with modern variant 1`] = `
+<DocumentFragment>
+  <button
+    aria-checked="false"
+    aria-label="tooltip"
+    class="ButtonGroup__ButtonGroupOptionStyled-sc-2f0qmd-0 lfZjmj"
+    data-testid="ButtonGroupOption"
+    role="radio"
+    type="button"
+  >
+    Test
+  </button>
+</DocumentFragment>
+`;
