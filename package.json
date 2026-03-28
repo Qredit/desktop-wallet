@@ -1,6 +1,6 @@
 {
 	"name": "qredit-wallet",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"private": true,
 	"description": "Qredit Wallet",
 	"homepage": "./",
@@ -36,7 +36,7 @@
 		"eject": "react-app-rewired eject",
 		"electron-rebuild": "electron-builder install-app-deps",
 		"format": "yarn lint && yarn prettier",
-		"postinstall": "yarn electron-rebuild",
+		"postinstall": "npx patch-package && yarn electron-rebuild",
 		"lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
 		"lint:nibble": "eslint-nibble '*/**/*.{js,ts,tsx}'",
 		"prettier": "prettier --write \"./*.{ts,tsx,js,json,md}\" \"./**/*.{ts,tsx,js,json,md}\"",

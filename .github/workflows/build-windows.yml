@@ -1,0 +1,83 @@
+name: Build & Sign Windows Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: yarn
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: yarn install --ignore-engines
+        env:
+          npm_config_python: python
+
+      - name: Apply SDK patches
+        run: npx patch-package
+
+      - name: Build app
+        run: yarn build:ci
+        env:
+          GENERATE_SOURCEMAP: 'false'
+
+      - name: Package Windows installer (unsigned)
+        run: npx electron-builder --win --x64 --publish never
+        env:
+          SKIP_NOTARIZE: 'true'
+
+      - name: Install AzureSignTool
+        run: dotnet tool install --global AzureSignTool
+
+      - name: Sign Windows artifacts
+        shell: pwsh
+        run: |
+          $exeFiles = Get-ChildItem -Path dist/target -Filter "*.exe" -Recurse
+          foreach ($file in $exeFiles) {
+            Write-Host "Signing $($file.FullName)..."
+            AzureSignTool sign `
+              -kvu "https://eus.codesigning.azure.net" `
+              -kvt "${{ secrets.AZURE_TENANT_ID }}" `
+              -kvi "${{ secrets.AZURE_CLIENT_ID }}" `
+              -kvs "${{ secrets.AZURE_CLIENT_SECRET }}" `
+              -kvc "${{ secrets.AZURE_CERT_PROFILE }}" `
+              -tr "http://timestamp.acs.microsoft.com" `
+              -td sha256 `
+              "$($file.FullName)"
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qredit-wallet-windows
+          path: |
+            dist/target/*.exe
+            dist/target/*.yml
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/target/*.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

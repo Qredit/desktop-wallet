@@ -1,0 +1,70 @@
+diff --git a/node_modules/@payvo/sdk-ark/distribution/cjs/networks/xqr.mainnet.js b/node_modules/@payvo/sdk-ark/distribution/cjs/networks/xqr.mainnet.js
+index 5244092..5265bab 100644
+--- a/node_modules/@payvo/sdk-ark/distribution/cjs/networks/xqr.mainnet.js
++++ b/node_modules/@payvo/sdk-ark/distribution/cjs/networks/xqr.mainnet.js
+@@ -12,9 +12,9 @@ const network = {
+         ticker: "XQR",
+     },
+     explorer: {
+-        block: "qredit/block/{0}",
+-        transaction: "qredit/transaction/{0}",
+-        wallet: "qredit/wallet/{0}",
++        block: "blocks/{0}",
++        transaction: "transactions/{0}",
++        wallet: "wallets/{0}",
+     },
+     featureFlags: {
+         ...shared_1.featureFlags,
+@@ -36,11 +36,15 @@ const network = {
+     },
+     hosts: [
+         {
+-            host: "https://qredit.cloud/api",
++            host: "http://52.168.32.116:5103/api",
+             type: "full",
+         },
+         {
+-            host: "https://explorer.sh/",
++            host: "http://64.236.250.123:5103/api",
++            type: "full",
++        },
++        {
++            host: "https://qreditscan.fnoufnou.com",
+             type: "explorer",
+         },
+     ],
+diff --git a/node_modules/@payvo/sdk-ark/distribution/esm/networks/xqr.mainnet.js b/node_modules/@payvo/sdk-ark/distribution/esm/networks/xqr.mainnet.js
+index 48f5b94..00aae48 100644
+--- a/node_modules/@payvo/sdk-ark/distribution/esm/networks/xqr.mainnet.js
++++ b/node_modules/@payvo/sdk-ark/distribution/esm/networks/xqr.mainnet.js
+@@ -10,9 +10,9 @@ const network = {
+         ticker: "XQR",
+     },
+     explorer: {
+-        block: "qredit/block/{0}",
+-        transaction: "qredit/transaction/{0}",
+-        wallet: "qredit/wallet/{0}",
++        block: "blocks/{0}",
++        transaction: "transactions/{0}",
++        wallet: "wallets/{0}",
+     },
+     featureFlags: {
+         ...featureFlags,
+@@ -34,11 +34,15 @@ const network = {
+     },
+     hosts: [
+         {
+-            host: "https://qredit.cloud/api",
++            host: "http://52.168.32.116:5103/api",
+             type: "full",
+         },
+         {
+-            host: "https://explorer.sh/",
++            host: "http://64.236.250.123:5103/api",
++            type: "full",
++        },
++        {
++            host: "https://qreditscan.fnoufnou.com",
+             type: "explorer",
+         },
+     ],
