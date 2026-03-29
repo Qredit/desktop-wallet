@@ -1,0 +1,28 @@
+diff --git a/node_modules/bstring/src/cashaddr.cc b/node_modules/bstring/src/cashaddr.cc
+index 2a8553f..77e22cf 100644
+--- a/node_modules/bstring/src/cashaddr.cc
++++ b/node_modules/bstring/src/cashaddr.cc
+@@ -351,12 +351,12 @@ bstring_cashaddr_encode(
+   uint8_t version_byte = type << 3 | encoded_size;
+ 
+   size_t data_len = hash_len + 1;
+-  uint8_t data[data_len];
++  uint8_t data[65];
+   data[0] = version_byte;
+   memcpy(data + 1, hash, hash_len);
+ 
+   size_t converted_len = 0;
+-  uint8_t converted[(data_len * 8 / 5) + 1];
++  uint8_t converted[106];
+ 
+   if (!convert_bits(err, converted, &converted_len, 5, data, data_len, 8, 1))
+     return false;
+@@ -396,7 +396,7 @@ bstring_cashaddr_decode(
+   }
+ 
+   size_t _converted_len = (data_len * 5 / 8) + 1;
+-  uint8_t converted[_converted_len + 1];
++  uint8_t converted[72];
+   memset(&converted, 0, _converted_len + 1);
+   size_t converted_len = 0;
+ 
