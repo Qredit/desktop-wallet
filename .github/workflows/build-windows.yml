@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2022
+    runs-on: windows-2019
     timeout-minutes: 180
     env:
       npm_config_python: python
@@ -28,27 +28,21 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Visual Studio Build Tools
-        uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Install dependencies (skip native builds)
-        run: yarn install --ignore-engines --ignore-scripts
+      - name: Install dependencies
+        run: yarn install --ignore-engines
+        timeout-minutes: 15
 
       - name: Apply SDK patches
         run: npx patch-package
 
-      - name: Rebuild native modules for Electron
-        run: npx electron-rebuild -f -w bcrypto,bstring,bufferutil,keccak,node-hid,secp256k1,tiny-secp256k1,usb,usb-detection,utf-8-validate,sodium-native
-        timeout-minutes: 90
-
       - name: Build app
-        run: |
-          npx electron-webpack
-          npx cross-env GENERATE_SOURCEMAP=false react-app-rewired build
+        run: yarn build:ci
+        env:
+          GENERATE_SOURCEMAP: 'false'
 
       - name: Package Windows installer (unsigned)
-        run: npx electron-builder --win --x64 --publish never --config.npmRebuild=false
-        timeout-minutes: 30
+        run: npx electron-builder --win --x64 --publish never
+        timeout-minutes: 120
 
       - name: Install AzureSignTool
         run: dotnet tool install --global AzureSignTool
